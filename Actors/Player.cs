@@ -44,6 +44,9 @@ namespace BlackJack
 
             response = basic.ApplyStrategy(hand,dealerFirstCard);
 
+            if (response == "DOUBLE DOWN" && hand.Cards.Count != 2)
+                response = "HIT";
+
             return response;
         }
 
@@ -78,8 +81,21 @@ namespace BlackJack
                 else if (Util.CheckBlackJack(hand))
                     actorString.Append(" : BLACKJACK");
                 Console.WriteLine(actorString);
-                Console.ResetColor();
             }
+        }
+
+        public void WriteResult(Hand hand)
+        {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                StringBuilder actorString = new StringBuilder();
+                actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
+                actorString.Append(string.Join(", ", hand.Cards));
+                actorString.Append(" --> " + hand.punteggio.Value);
+                if (hand.punteggio.Value > 21)
+                    actorString.Append(" : SBALLATO");
+                else if (Util.CheckBlackJack(hand))
+                    actorString.Append(" : BLACKJACK");
+                Console.WriteLine(actorString);
         }
 
     }

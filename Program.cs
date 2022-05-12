@@ -21,10 +21,6 @@ namespace BlackJack
             FileCSV fileCSV = new FileCSV("Data.csv");
             fileCSV.WriteHeader(";", se_data);
 
-            //Creazione della coda di carte
-           // Queue<string> cardQueue = new Queue<string>();
-            
-
             //Ciclo sugli shoe
             for (int nShoes=1; nShoes<= Costanti.N_SHOES; nShoes++)
             {
@@ -79,7 +75,6 @@ namespace BlackJack
 
         private static void SimulatePlay(Queue<string> cardSequence)
         {
-            int intialCardQueue = cardSequence.Count;
             int numeroGiocate = 0;
 
             while (cardSequence.Count >= 20)
@@ -112,9 +107,9 @@ namespace BlackJack
                 Console.Write($"\nMano {numeroGiocate} \t");
                 Console.WriteLine($"DEALER: { dealerFirstCard}");
 
-                player.WriteResult();
-                
-                
+               
+
+
 
                 //Giocata player
                 if (!Util.CheckBlackJack(dealer.hand))
@@ -123,15 +118,19 @@ namespace BlackJack
                     for (int playerhandID = 0; playerhandID < player.hands.Count; playerhandID++)
                     {
                         var playerHand = player.hands[playerhandID];
-                        string response="";
-                        while ( !playerHand.f_bust &&
-                                response!="STAND" &&
+                        string response = "";
+                        if (playerhandID > 0)
+                            Console.WriteLine("---");
+                        player.WriteResult(playerHand);
+
+                        while (!playerHand.f_bust &&
+                                response != "STAND" &&
                                 !playerHand.f_double)
                         {
                             response = player.Ask(playerhandID, dealerFirstCardPoint);
 
                             if (response == "HIT")
-                                player.GiveCard(cardSequence.Dequeue(),playerhandID);
+                                player.GiveCard(cardSequence.Dequeue(), playerhandID);
 
                             else if (response == "DOUBLE DOWN")
                             {
@@ -152,18 +151,21 @@ namespace BlackJack
                                     //Creo nuova mano e sposto la carta da una mano all'altra
                                     player.NewHand(true);
                                     playerHand.f_split = true;
-                                    player.GiveCard(playerHand.Cards[1], playerhandID+1);
+                                    player.GiveCard(playerHand.Cards[1], playerhandID + 1);
                                     playerHand.Cards.RemoveAt(playerHand.Cards.Count - 1);
-                                    player.GiveCard( cardSequence.Dequeue(),playerhandID);
                                     player.GiveCard(cardSequence.Dequeue(), playerhandID);
+                                    player.GiveCard(cardSequence.Dequeue(), playerhandID+1);
+                                    
                                 }
                             }
 
                             Console.WriteLine(response);
-                            player.WriteResult();
-                            
+                            if (response == "SPLIT")
+                                Console.WriteLine("---");
+                            player.WriteResult(playerHand);
+
                         }
-                    }
+                     }
 
                     #endregion GIOCATA PLAYER
 
@@ -181,7 +183,7 @@ namespace BlackJack
                             countEnded++;
                     }
 
-                  
+
                     string dealerAction = "";
                     if (countEnded != player.hands.Count)
                         while (dealer.hand.punteggio.Value < 21 &&
@@ -193,18 +195,24 @@ namespace BlackJack
                             Console.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());
-                            
+
                         }
 
                     dealer.WriteResult();
 
                     #endregion GIOCATA DEALER
-
-                    //Risultato della mano
-                    CheckTheWinner(player, dealer);
-
-                    // Console.ReadKey();     
                 }
+                else
+                {
+                    player.WriteResult();
+                    dealer.WriteResult();
+                }
+
+                //Risultato della mano
+                CheckTheWinner(player, dealer);
+
+                Console.ReadKey();     
+              
             }
         }
 
@@ -223,55 +231,55 @@ namespace BlackJack
                     {
                         Player.ManiVinte--;
                         Player.TotVincita -= playerHand.Puntata;
-                        Console.WriteLine($"Il dealer vince, tot= {Player.TotVincita}");
-                    }
+                        Console.WriteLine($"Il dealer vince");
+                }
 
                     else if (punteggioDealer > 21)
                     {
                         Player.ManiVinte++;
                         Player.TotVincita += playerHand.Puntata;
-                        Console.WriteLine($"Il player vince, tot= {Player.TotVincita}");
+                        Console.WriteLine($"Il player vince");
                     }
 
                     else if (Util.CheckBlackJack(playerHand))
                     {
                         Player.CounterBlackJack++;
-                        if (Util.CheckBlackJack(dealerHand))
+                        if (!Util.CheckBlackJack(dealerHand))
                         {
                             Player.ManiVinte++;
                             Player.TotVincita += (float)playerHand.Puntata * (float)1.5;
-                            Console.WriteLine($"Il player vince, tot= {Player.TotVincita}");
-                        }
+                            Console.WriteLine($"Il player vince");
+                    }
                         else
                         {
                             Dealer.CounterBlackJack++;
-                            Console.WriteLine($"Pareggio, tot= {Player.TotVincita}");
-                        }
+                            Console.WriteLine($"Pareggio");
+                    }
                     }
 
                     else if (punteggioPlayer > punteggioDealer)
                     {
                         Player.ManiVinte++;
                         Player.TotVincita += playerHand.Puntata;
-                        Console.WriteLine($"Il player vince, tot= {Player.TotVincita}");
+                        Console.WriteLine($"Il player vince");
                     }
 
                     else if (punteggioPlayer < punteggioDealer)
                     {
                         Player.ManiVinte--;
                         Player.TotVincita -= playerHand.Puntata;
-                        Console.WriteLine($"Il dealer vince, tot= {Player.TotVincita}");
+                        Console.WriteLine($"Il dealer vince");
                     }
 
                     else
                     {
                         Player.ManiPareggiate++;
-                        Console.WriteLine($"Pareggio, tot = { Player.TotVincita}");
+                        Console.WriteLine($"Pareggio");
                     }
                 }
             
             Console.ResetColor();
-
+            Console.WriteLine($"Saldo player: {Player.TotVincita}");
 
         }
 
