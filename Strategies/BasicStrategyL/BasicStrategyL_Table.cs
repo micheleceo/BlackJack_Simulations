@@ -9,7 +9,7 @@ namespace BlackJack.StrategiesTables
     public class BasicStrategyL_Table
     {
         //basic strategy table in two dimensional array
-        public string[,] Response = new string[32, 11];
+        public string[,] Response = new string[32, 10];
 
      
 
@@ -280,16 +280,16 @@ namespace BlackJack.StrategiesTables
             Response[21, 9] = "HIT";
 
             //CoppiaA
-            Response[23, 0] = "SPLIT";
-            Response[23, 1] = "SPLIT";
-            Response[23, 2] = "SPLIT";
-            Response[23, 3] = "SPLIT";
-            Response[23, 4] = "SPLIT";
-            Response[23, 5] = "SPLIT";
-            Response[23, 6] = "SPLIT";
-            Response[23, 7] = "SPLIT";
-            Response[23, 8] = "SPLIT";
-            Response[23, 9] = "SPLIT";
+            Response[22, 0] = "SPLIT";
+            Response[22, 1] = "SPLIT";
+            Response[22, 2] = "SPLIT";
+            Response[22, 3] = "SPLIT";
+            Response[22, 4] = "SPLIT";
+            Response[22, 5] = "SPLIT";
+            Response[22, 6] = "SPLIT";
+            Response[22, 7] = "SPLIT";
+            Response[22, 8] = "SPLIT";
+            Response[22, 9] = "SPLIT";
 
             //Coppia10
             Response[23, 0] = "STAND";
@@ -304,30 +304,18 @@ namespace BlackJack.StrategiesTables
             Response[23, 9] = "STAND";
 
             //Coppia9
-            Response[23, 0] = "SPLIT";
-            Response[23, 1] = "SPLIT";
-            Response[23, 2] = "SPLIT";
-            Response[23, 3] = "SPLIT";
-            Response[23, 4] = "SPLIT";
-            Response[23, 5] = "STAND";
-            Response[23, 6] = "SPLIT";
-            Response[23, 7] = "SPLIT";
-            Response[23, 8] = "STAND";
-            Response[23, 9] = "STAND";
-
-            //Coppia8
             Response[24, 0] = "SPLIT";
             Response[24, 1] = "SPLIT";
             Response[24, 2] = "SPLIT";
             Response[24, 3] = "SPLIT";
             Response[24, 4] = "SPLIT";
-            Response[24, 5] = "SPLIT";
+            Response[24, 5] = "STAND";
             Response[24, 6] = "SPLIT";
             Response[24, 7] = "SPLIT";
-            Response[24, 8] = "SPLIT";
-            Response[24, 9] = "SPLIT";
+            Response[24, 8] = "STAND";
+            Response[24, 9] = "STAND";
 
-            //Coppia7
+            //Coppia8
             Response[25, 0] = "SPLIT";
             Response[25, 1] = "SPLIT";
             Response[25, 2] = "SPLIT";
@@ -335,59 +323,59 @@ namespace BlackJack.StrategiesTables
             Response[25, 4] = "SPLIT";
             Response[25, 5] = "SPLIT";
             Response[25, 6] = "SPLIT";
-            Response[25, 7] = "HIT";
-            Response[25, 8] = "HIT";
-            Response[25, 9] = "HIT";
+            Response[25, 7] = "SPLIT";
+            Response[25, 8] = "SPLIT";
+            Response[25, 9] = "SPLIT";
 
-            //Coppia6
+            //Coppia7
             Response[26, 0] = "SPLIT";
             Response[26, 1] = "SPLIT";
             Response[26, 2] = "SPLIT";
             Response[26, 3] = "SPLIT";
             Response[26, 4] = "SPLIT";
             Response[26, 5] = "SPLIT";
-            Response[26, 6] = "HIT";
+            Response[26, 6] = "SPLIT";
             Response[26, 7] = "HIT";
             Response[26, 8] = "HIT";
             Response[26, 9] = "HIT";
 
-            //Coppia5
+            //Coppia6
             Response[27, 0] = "SPLIT";
             Response[27, 1] = "SPLIT";
             Response[27, 2] = "SPLIT";
             Response[27, 3] = "SPLIT";
             Response[27, 4] = "SPLIT";
             Response[27, 5] = "SPLIT";
-            Response[27, 6] = "SPLIT";
-            Response[27, 7] = "SPLIT";
+            Response[27, 6] = "HIT";
+            Response[27, 7] = "HIT";
             Response[27, 8] = "HIT";
             Response[27, 9] = "HIT";
 
-            //Coppia4
-            Response[28, 0] = "HIT";
-            Response[28, 1] = "HIT";
-            Response[28, 2] = "HIT";
+            //Coppia5
+            Response[28, 0] = "SPLIT";
+            Response[28, 1] = "SPLIT";
+            Response[28, 2] = "SPLIT";
             Response[28, 3] = "SPLIT";
             Response[28, 4] = "SPLIT";
-            Response[28, 5] = "HIT";
-            Response[28, 6] = "HIT";
-            Response[28, 7] = "HIT";
+            Response[28, 5] = "SPLIT";
+            Response[28, 6] = "SPLIT";
+            Response[28, 7] = "SPLIT";
             Response[28, 8] = "HIT";
             Response[28, 9] = "HIT";
 
-            //Coppia3
-            Response[29, 0] = "SPLIT";
-            Response[29, 1] = "SPLIT";
-            Response[29, 2] = "SPLIT";
+            //Coppia4
+            Response[29, 0] = "HIT";
+            Response[29, 1] = "HIT";
+            Response[29, 2] = "HIT";
             Response[29, 3] = "SPLIT";
             Response[29, 4] = "SPLIT";
-            Response[29, 5] = "SPLIT";
+            Response[29, 5] = "HIT";
             Response[29, 6] = "HIT";
             Response[29, 7] = "HIT";
             Response[29, 8] = "HIT";
             Response[29, 9] = "HIT";
 
-            //Coppia2
+            //Coppia3
             Response[30, 0] = "SPLIT";
             Response[30, 1] = "SPLIT";
             Response[30, 2] = "SPLIT";
@@ -398,6 +386,18 @@ namespace BlackJack.StrategiesTables
             Response[30, 7] = "HIT";
             Response[30, 8] = "HIT";
             Response[30, 9] = "HIT";
+
+            //Coppia2
+            Response[31, 0] = "SPLIT";
+            Response[31, 1] = "SPLIT";
+            Response[31, 2] = "SPLIT";
+            Response[31, 3] = "SPLIT";
+            Response[31, 4] = "SPLIT";
+            Response[31, 5] = "SPLIT";
+            Response[31, 6] = "HIT";
+            Response[31, 7] = "HIT";
+            Response[31, 8] = "HIT";
+            Response[31, 9] = "HIT";
 
         }
     }

@@ -86,7 +86,7 @@ namespace BlackJack
             {
                 #region DISTRIBUZIONE INIZIALE
                 numeroGiocate++;
-                Console.WriteLine($"\nMano {numeroGiocate}");
+               
                 var player = new Player();
                 player.NewHand();
                 var dealer = new Dealer();
@@ -108,9 +108,13 @@ namespace BlackJack
 
 
                 #region GIOCATA PLAYER
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write($"\nMano {numeroGiocate} \t");
+                Console.WriteLine($"DEALER: { dealerFirstCard}");
 
-                Console.WriteLine("DEALER: " + dealerFirstCard);
                 player.WriteResult();
+                
+                
 
                 //Giocata player
                 if (!Util.CheckBlackJack(dealer.hand))
@@ -148,21 +152,18 @@ namespace BlackJack
                                     //Creo nuova mano e sposto la carta da una mano all'altra
                                     player.NewHand(true);
                                     playerHand.f_split = true;
-                                    player.GiveCard(player.hands[playerhandID].Cards[1], playerhandID);
+                                    player.GiveCard(playerHand.Cards[1], playerhandID+1);
                                     playerHand.Cards.RemoveAt(playerHand.Cards.Count - 1);
                                     player.GiveCard( cardSequence.Dequeue(),playerhandID);
                                     player.GiveCard(cardSequence.Dequeue(), playerhandID);
                                 }
                             }
 
-                            player.WriteResult();
                             Console.WriteLine(response);
+                            player.WriteResult();
                             
                         }
                     }
-
-
-                    player.WriteResult();
 
                     #endregion GIOCATA PLAYER
 
@@ -187,9 +188,12 @@ namespace BlackJack
                                !dealer.hand.f_bust &&
                                dealerAction != "STAND")
                         {
+                            dealer.WriteResult();
                             dealerAction = dealer.ApplicaRegole();
+                            Console.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());
+                            
                         }
 
                     dealer.WriteResult();
@@ -206,6 +210,7 @@ namespace BlackJack
 
         static void CheckTheWinner(Player player, Dealer dealer)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             var dealerHand = dealer.hand;
             var punteggioDealer = dealerHand.punteggio.Value;
 
@@ -264,7 +269,10 @@ namespace BlackJack
                         Console.WriteLine($"Pareggio, tot = { Player.TotVincita}");
                     }
                 }
-           
+            
+            Console.ResetColor();
+
+
         }
 
 

@@ -68,6 +68,7 @@ namespace BlackJack
         {
             foreach (Hand hand in hands)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 StringBuilder actorString = new StringBuilder();
                 actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
                 actorString.Append(string.Join(", ", hand.Cards));
@@ -77,6 +78,7 @@ namespace BlackJack
                 else if (Util.CheckBlackJack(hand))
                     actorString.Append(" : BLACKJACK");
                 Console.WriteLine(actorString);
+                Console.ResetColor();
             }
         }
 
