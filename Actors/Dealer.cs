@@ -44,8 +44,10 @@ namespace BlackJack
 
         public void WriteResult()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            StringBuilder actorString = new StringBuilder();
+            if(Costanti.f_console)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                StringBuilder actorString = new StringBuilder();
                 actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
                 actorString.Append(string.Join(", ", hand.Cards));
                 actorString.Append(" --> " + hand.punteggio.Value);
@@ -54,7 +56,8 @@ namespace BlackJack
                 else if (Util.CheckBlackJack(hand))
                     actorString.Append(" : BLACKJACK");
                 Console.WriteLine(actorString);
-          //  Console.ResetColor();
+            }
+         
         }
 
     }

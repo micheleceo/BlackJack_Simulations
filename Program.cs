@@ -11,6 +11,7 @@ namespace BlackJack
     {
         static int numeroShoe = 0;
         static int numeroGiocate = 0;
+        static Log log = new Log();
        
 
         static void Main(string[] args)
@@ -90,9 +91,10 @@ namespace BlackJack
 
             while (cardSequence.Count >= 208   )
             {
-                #region DISTRIBUZIONE INIZIALE
                 numeroGiocate++;
-               
+
+                #region DISTRIBUZIONE INIZIALE
+
                 var player = new Player();
                 player.NewHand();
                 var dealer = new Dealer();
@@ -116,12 +118,15 @@ namespace BlackJack
                 //Carta al dealer
                 dealer.GiveCard(dealerSeconCard);
                 #endregion DISTRIBUZIONE INZIZIALE
-
-
+           
                 #region GIOCATA PLAYER
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"\nShoe {numeroShoe} \t Mano {numeroGiocate} \t");
-                Console.WriteLine($"DEALER: { dealerFirstCard}");
+                
+              //  if(Costanti.f_console)
+           //     {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    log.Write($"\nShoe {numeroShoe} \t Mano {numeroGiocate} \t");
+                    log.WriteLine($"DEALER: { dealerFirstCard}");
+           //     }
 
 
                 //Giocata player
@@ -132,8 +137,10 @@ namespace BlackJack
                     {
                         var playerHand = player.hands[playerhandID];
                         string response = "";
-                        if (playerhandID > 0)
-                            Console.WriteLine("---");
+
+                        if(Costanti.f_console)
+                            if (playerhandID > 0)
+                                log.WriteLine("---");
                         player.WriteResult(playerHand);
 
                         while (!playerHand.f_bust &&
@@ -177,9 +184,13 @@ namespace BlackJack
                                 }
                             }
 
-                            Console.WriteLine(response);
-                            if (response == "SPLIT")
-                                Console.WriteLine("---");
+                            if(Costanti.f_console)
+                            {
+                                log.WriteLine(response);
+                                if (response == "SPLIT")
+                                    log.WriteLine("---");
+                            }
+                           
                             player.WriteResult(playerHand);
 
                         }
@@ -207,7 +218,7 @@ namespace BlackJack
                         {
                             dealer.WriteResult();
                             dealerAction = dealer.ApplicaRegole();
-                            Console.WriteLine(dealerAction);
+                            log.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());
 
@@ -246,14 +257,14 @@ namespace BlackJack
                     {
                         Player.ManiVinte--;
                         Player.TotVincita -= playerHand.Puntata;
-                        Console.WriteLine($"Il dealer vince");
+                        log.WriteLine($"Il dealer vince");
                 }
 
                     else if (punteggioDealer > 21)
                     {
                         Player.ManiVinte++;
                         Player.TotVincita += playerHand.Puntata;
-                        Console.WriteLine($"Il player vince");
+                        log.WriteLine($"Il player vince");
                     }
 
                     else if (Util.CheckBlackJack(playerHand))
@@ -263,38 +274,39 @@ namespace BlackJack
                         {
                             Player.ManiVinte++;
                             Player.TotVincita += (float)playerHand.Puntata * (float)1.5;
-                            Console.WriteLine($"Il player vince");
-                    }
+                            log.WriteLine($"Il player vince");
+                        }
                         else
                         {
                             Dealer.CounterBlackJack++;
-                            Console.WriteLine($"Push");
-                    }
+                        if (Costanti.f_console)
+                            log.WriteLine($"Push");
+                        }
                     }
 
                     else if (punteggioPlayer > punteggioDealer)
                     {
                         Player.ManiVinte++;
                         Player.TotVincita += playerHand.Puntata;
-                        Console.WriteLine($"Il player vince");
+                        log.WriteLine($"Il player vince");
                     }
 
                     else if (punteggioPlayer < punteggioDealer)
                     {
                         Player.ManiVinte--;
                         Player.TotVincita -= playerHand.Puntata;
-                        Console.WriteLine($"Il dealer vince");
+                        log.WriteLine($"Il dealer vince");
                     }
 
                     else
                     {
                         Player.ManiPareggiate++;
-                        Console.WriteLine($"Push");
+                        log.WriteLine($"Push");
                     }
                 }
             
             Console.ResetColor();
-            Console.WriteLine($"Saldo player: {Player.TotVincita}");
+            log.WriteLine($"Saldo player: {Player.TotVincita}");
 
         }
 
