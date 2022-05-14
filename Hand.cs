@@ -41,8 +41,8 @@ namespace BlackJack
             if (CardValue.Count == 2 && CardValue[0] == CardValue[1] && !f_split)
             {
                 f_coppia = true;
-                punteggio.Value = CardValue[0] * 2;
-                return;
+              //  punteggio.Value = CardValue[0] * 2;
+              //  return;
             }
             else f_coppia = false;
 
@@ -50,14 +50,27 @@ namespace BlackJack
             foreach (int value in CardValue)
             {
                 punteggio.Value += value;
-                if(punteggio.Value > 21)
+                if(value ==11)
                 {
-                    if (value == 11)
+                    if (punteggio.Value > 21)
                         punteggio.Value -= 10;
                     else
-                        f_bust = true;
+                        punteggio.f_soft = true;
 
                 }
+                else if(punteggio.Value > 21)
+                    f_bust = true;
+
+
+                //if(punteggio.Value > 21)
+                //{
+                //    if (value == 11)
+                //    {
+                //        punteggio.Value -= 10;
+                //    }
+                //    else
+                //        f_bust = true;
+                //}
             }
 
         }

@@ -52,7 +52,7 @@ namespace BlackJack
         {
             bool f_BlackJack = false;
 
-            if (hand.Cards.Count == 2 && hand.punteggio.Value == 21)
+            if (hand.Cards.Count == 2 && hand.punteggio.Value == 21 && !hand.f_split)
                 f_BlackJack = true;
 
             return f_BlackJack;

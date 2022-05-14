@@ -77,7 +77,7 @@ namespace BlackJack
         {
             int numeroGiocate = 0;
 
-            while (cardSequence.Count >= 20)
+            while (cardSequence.Count >= 208   )
             {
                 #region DISTRIBUZIONE INIZIALE
                 numeroGiocate++;
@@ -87,18 +87,23 @@ namespace BlackJack
                 var dealer = new Dealer();
                 dealer.NewHand();
 
+                //Estrazione delle prime quattro carte
+                var playerFirstCard = cardSequence.Dequeue();
+                var dealerFirstCard = cardSequence.Dequeue();
+                var playerSeconCard = cardSequence.Dequeue();
+                var dealerSeconCard = cardSequence.Dequeue();
+
                 //Carta al player
-                player.GiveCard(cardSequence.Dequeue());
+                player.GiveCard(playerFirstCard);
 
                 //Carta al dealer
-                string dealerFirstCard = cardSequence.Dequeue();
                 dealer.GiveCard(dealerFirstCard);
 
                 //Carta al player
-                player.GiveCard(cardSequence.Dequeue());
+                player.GiveCard(playerSeconCard);
 
                 //Carta al dealer
-                dealer.GiveCard(cardSequence.Dequeue());
+                dealer.GiveCard(dealerSeconCard);
                 #endregion DISTRIBUZIONE INZIZIALE
 
 
@@ -150,7 +155,10 @@ namespace BlackJack
                                 {
                                     //Creo nuova mano e sposto la carta da una mano all'altra
                                     player.NewHand(true);
+                                    //Setto il flag split
                                     playerHand.f_split = true;
+                                    player.hands[playerhandID + 1].f_split = true;
+                                   
                                     player.GiveCard(playerHand.Cards[1], playerhandID + 1);
                                     playerHand.Cards.RemoveAt(playerHand.Cards.Count - 1);
                                     player.GiveCard(cardSequence.Dequeue(), playerhandID);
@@ -172,14 +180,11 @@ namespace BlackJack
 
                     #region GIOCATA DEALER
 
-                    //Giocata dealer
-
-                    //Supponiamo che abbia controllato prima il blackjack
                     //Controllo che il player non abbia fatto tutti blackjack o bust
                     int countEnded = 0;
                     foreach (Hand playerHand in player.hands)
                     {
-                        if (Util.CheckBlackJack(playerHand) || playerHand.f_bust)
+                        if (Util.CheckBlackJack(playerHand))
                             countEnded++;
                     }
 
@@ -211,7 +216,7 @@ namespace BlackJack
                 //Risultato della mano
                 CheckTheWinner(player, dealer);
 
-                Console.ReadKey();     
+              //  Console.ReadKey();     
               
             }
         }
