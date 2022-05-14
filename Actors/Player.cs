@@ -58,10 +58,10 @@ namespace BlackJack
             //Strategia base
             if (hands[0].punteggio.Value <= 16)
                 response = "HIT";
-            else if (hands[0].punteggio.Value >= 17 && hands[0].punteggio.Value < 21)
+            else if (hands[0].punteggio.Value >= 17 && hands[0].punteggio.Value <= 21)
                 response = "STAND";
             else
-                response = "AFFANGUL";
+                response = "SBALLATO";
 
             return response;
         }

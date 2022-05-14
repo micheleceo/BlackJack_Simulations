@@ -9,6 +9,10 @@ namespace BlackJack
 {
     class Program
     {
+        static int numeroShoe = 0;
+        static int numeroGiocate = 0;
+       
+
         static void Main(string[] args)
         {
             // Single extraction data
@@ -67,15 +71,22 @@ namespace BlackJack
 
             WriteStatistic(stat_data);
 
-            Shoe testShoe = new Shoe(Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
-            testShoe.Shuffle();
-            SimulatePlay(testShoe.cards);          
+
+            //FileCSV handFile = new FileCSV("HandFile");
+            //var had_data = new HandData
+            for (int nShoes = 1; nShoes <= Costanti.N_SHOES; nShoes++)
+            {
+                Shoe testShoe = new Shoe(Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
+                testShoe.Shuffle();
+                SimulatePlay(testShoe.cards);
+            }
+                     
         }
 
 
         private static void SimulatePlay(Queue<string> cardSequence)
         {
-            int numeroGiocate = 0;
+            numeroShoe++;
 
             while (cardSequence.Count >= 208   )
             {
@@ -109,11 +120,8 @@ namespace BlackJack
 
                 #region GIOCATA PLAYER
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"\nMano {numeroGiocate} \t");
+                Console.Write($"\nShoe {numeroShoe} \t Mano {numeroGiocate} \t");
                 Console.WriteLine($"DEALER: { dealerFirstCard}");
-
-               
-
 
 
                 //Giocata player
@@ -260,7 +268,7 @@ namespace BlackJack
                         else
                         {
                             Dealer.CounterBlackJack++;
-                            Console.WriteLine($"Pareggio");
+                            Console.WriteLine($"Push");
                     }
                     }
 
@@ -281,7 +289,7 @@ namespace BlackJack
                     else
                     {
                         Player.ManiPareggiate++;
-                        Console.WriteLine($"Pareggio");
+                        Console.WriteLine($"Push");
                     }
                 }
             
