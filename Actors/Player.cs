@@ -44,7 +44,7 @@ namespace BlackJack
 
             response = basic.ApplyStrategy(hand,dealerFirstCard);
 
-            if (response == "DOUBLE DOWN" && hand.Cards.Count != 2)
+            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split))
                 response = "HIT";
 
             return response;

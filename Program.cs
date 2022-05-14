@@ -161,8 +161,10 @@ namespace BlackJack
                                    
                                     player.GiveCard(playerHand.Cards[1], playerhandID + 1);
                                     playerHand.Cards.RemoveAt(playerHand.Cards.Count - 1);
-                                    player.GiveCard(cardSequence.Dequeue(), playerhandID);
-                                    player.GiveCard(cardSequence.Dequeue(), playerhandID+1);
+                                    var firstHandSecondCard = cardSequence.Dequeue();
+                                    var secondHandSecondCard = cardSequence.Dequeue();
+                                    player.GiveCard(firstHandSecondCard, playerhandID);
+                                    player.GiveCard(secondHandSecondCard, playerhandID+1);
                                     
                                 }
                             }
