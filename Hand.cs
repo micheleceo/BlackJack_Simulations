@@ -39,17 +39,16 @@ namespace BlackJack
 
             //Controllo se ho una coppia (che non sia già uno split)
             if (CardValue.Count == 2 && CardValue[0] == CardValue[1] && !f_split)
-            {
                 f_coppia = true;
-              //  punteggio.Value = CardValue[0] * 2;
-              //  return;
-            }
-            else f_coppia = false;
+            else
+                f_coppia = false;
 
-           
+            //Calcolo del punteggio
             foreach (int value in CardValue)
             {
                 punteggio.Value += value;
+
+                //Controllo del punteggio soft
                 if(value ==11)
                 {
                     if (punteggio.Value > 21)
@@ -60,17 +59,6 @@ namespace BlackJack
                 }
                 else if(punteggio.Value > 21)
                     f_bust = true;
-
-
-                //if(punteggio.Value > 21)
-                //{
-                //    if (value == 11)
-                //    {
-                //        punteggio.Value -= 10;
-                //    }
-                //    else
-                //        f_bust = true;
-                //}
             }
 
         }
