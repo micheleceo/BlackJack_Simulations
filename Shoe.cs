@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     /// <summary>
     /// Gestione dello shoe e dei mazzi da estrarre

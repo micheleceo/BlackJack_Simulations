@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack.StrategiesTables
+namespace BlackJackSimul.StrategiesTables
 {
     public class BasicStrategyAnt_Table
     {

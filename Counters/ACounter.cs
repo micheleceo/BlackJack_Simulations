@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     public abstract class ACounter
     {
@@ -17,14 +17,41 @@ namespace BlackJack
         {
             _shoe = shoe;
         }
+        public int AceCounter { get; set; }
+
+        public int TenCounter { get; set; }
+
 
         public abstract int CalulateIncrement(string cardFace);
 
-        public void UpdateCounters(string cardFace)
+        public abstract void UpdateCounters(string cardFace);
+
+        public void UpddateSideCounters(string cardValue)
         {
-            var RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
-            RunningCounter += CalulateIncrement(cardFace);
-            TrueCounter = ((float)RunningCounter / RemainingDecks);
+            switch (cardValue)
+            {
+                case "A":
+                    {
+                        AceCounter++;
+                        break;
+                    }
+
+                case "10":
+                case "J":
+                case "Q":
+                case "K":
+                    {
+                        TenCounter++;
+                        break;
+                    }
+
+            
+                default:
+                    // code block
+                    break;
+            }
+
         }
+
     }
 }

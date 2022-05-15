@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     /// <summary>
     /// Classe utiliy che permette di scrivere un file .csv a partire da una classe generica

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack.CountingStrategy
+namespace BlackJackSimul.CountingStrategy
 {
     class RAPC_Counter: ACounter
     {
@@ -51,5 +51,13 @@ namespace BlackJack.CountingStrategy
             return increment;
 
        }
+
+
+        public override void UpdateCounters(string cardFace)
+        {
+            var RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
+            RunningCounter += CalulateIncrement(cardFace);
+            TrueCounter = ((float)RunningCounter / (RemainingDecks*2));
+        }
     }
 }
