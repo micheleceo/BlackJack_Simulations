@@ -22,7 +22,7 @@ namespace BlackJackSimul
         public const int N_SHOES = 1000;
 
         //Console
-        public const bool f_console = true;
+        public const bool f_console = false;
         public const bool f_txtLog = true;
     }
 }

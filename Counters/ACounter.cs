@@ -24,7 +24,7 @@ namespace BlackJackSimul
 
         public abstract int CalulateIncrement(string cardFace);
 
-        public abstract void UpdateCounters(string cardFace);
+        public abstract void UpdateMainCounters(string cardFace);
 
         public void UpddateSideCounters(string cardValue)
         {

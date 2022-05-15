@@ -85,6 +85,7 @@ namespace BlackJackSimul
 
 
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.WriteLine($"DEALER: { dealerFirstCard}");
 
@@ -199,8 +200,8 @@ namespace BlackJackSimul
                 foreach (string card in dealer.hand.Cards)
                 {
                     playRecord.CardSequence += card + ",";
-                    hl_counter.UpdateCounters(card);
-                    rapc_counter.UpdateCounters(card);
+                    hl_counter.UpdateMainCounters(card);
+                    rapc_counter.UpdateMainCounters(card);
                     playRecord.HL_RunningCounter = hl_counter.RunningCounter;
                     playRecord.HL_TrueCounter = hl_counter.TrueCounter;
                     playRecord.RAPC_RunningCounter = rapc_counter.RunningCounter;
@@ -211,8 +212,8 @@ namespace BlackJackSimul
                     foreach (string card in hand.Cards)
                     {
                         playRecord.CardSequence += card + ",";
-                        hl_counter.UpdateCounters(card);
-                        rapc_counter.UpdateCounters(card);
+                        hl_counter.UpdateMainCounters(card);
+                        rapc_counter.UpdateMainCounters(card);
                         playRecord.HL_RunningCounter = hl_counter.RunningCounter;
                         playRecord.HL_TrueCounter = hl_counter.TrueCounter;
                         playRecord.RAPC_RunningCounter = rapc_counter.RunningCounter;

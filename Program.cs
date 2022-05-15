@@ -48,13 +48,13 @@ namespace BlackJackSimul
                         se_data.Card = shoe.GetCard();
                         
                         //Aggiornamento counter HL
-                        hl_counter.UpdateCounters(se_data.Card);
+                        hl_counter.UpdateMainCounters(se_data.Card);
                         se_data.HL_RunningCounter = hl_counter.RunningCounter;
                         se_data.HL_TrueCounter = hl_counter.TrueCounter;
                         stat_data.memory.HL_TrueCountersequence.Add(hl_counter.TrueCounter);
 
                         //Aggiornamento counter RAPC
-                        rapc_counter.UpdateCounters(se_data.Card);
+                        rapc_counter.UpdateMainCounters(se_data.Card);
                         se_data.RAPC_RunningCounter = rapc_counter.RunningCounter;
                         se_data.RAPC_TrueCounter = rapc_counter.TrueCounter;
                         stat_data.memory.RAPC_TrueCounterSequence.Add(rapc_counter.TrueCounter);

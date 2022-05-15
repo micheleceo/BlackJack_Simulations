@@ -14,7 +14,7 @@ namespace BlackJackSimul
         /// </summary>
         public List<Hand> hands = new List<Hand>();
 
-      
+        BasicStrategyL basic = new BasicStrategyL();
 
         public static float TotVincita = 0;
 
@@ -40,7 +40,7 @@ namespace BlackJackSimul
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
             string response = "";
-            BasicStrategyL basic = new BasicStrategyL();
+          //  BasicStrategyL basic = new BasicStrategyL();
 
             response = basic.ApplyStrategy(hand,dealerFirstCard);
 
