@@ -16,7 +16,9 @@ namespace BlackJackSimul
 
         BasicStrategyL basic = new BasicStrategyL();
 
-        public static float TotVincita = 0;
+        public static float Stake = 0;
+
+        public static float TotalPlayed = 0;
 
 
         public override void NewHand(bool f_split = false)
@@ -69,18 +71,21 @@ namespace BlackJackSimul
         
         public void WriteResult()
         {
-            foreach (Hand hand in hands)
+            if (Costanti.f_console)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                StringBuilder actorString = new StringBuilder();
-                actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
-                actorString.Append(string.Join(", ", hand.Cards));
-                actorString.Append(" --> " + hand.punteggio.Value);
-                if (hand.punteggio.Value > 21)
-                    actorString.Append(" : SBALLATO");
-                else if (Util.CheckBlackJack(hand))
-                    actorString.Append(" : BLACKJACK");
-                Console.WriteLine(actorString);
+                foreach (Hand hand in hands)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    StringBuilder actorString = new StringBuilder();
+                    actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
+                    actorString.Append(string.Join(", ", hand.Cards));
+                    actorString.Append(" --> " + hand.punteggio.Value);
+                    if (hand.punteggio.Value > 21)
+                        actorString.Append(" : SBALLATO");
+                    else if (Util.CheckBlackJack(hand))
+                        actorString.Append(" : BLACKJACK");
+                    Console.WriteLine(actorString);
+                }
             }
         }
 

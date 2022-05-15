@@ -32,9 +32,11 @@ namespace BlackJackSimul
             playFile = new FileCSV("PlayFile.csv");
             playFile.WriteHeader(";", playRecord);
 
+            List<string> deck = CardDeck.Create();
+
             for (int nShoe = 1; nShoe <= ShoeNumber; nShoe++)
             {
-                shoe = new Shoe(MazziPerShoe, MazziDaEstrarrePerShoe);
+                shoe = new Shoe(MazziPerShoe, MazziDaEstrarrePerShoe, deck);
                 shoe.Shuffle();
                 playRecord.ShoeID = nShoe;
                 Play(shoe);
@@ -84,17 +86,19 @@ namespace BlackJackSimul
                 #endregion DISTRIBUZIONE INZIZIALE
 
 
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
+               // Console.ForegroundColor = ConsoleColor.White;
+                Console.Write($"\r Shoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.WriteLine($"DEALER: { dealerFirstCard}");
 
 
-                #region GIOCATA PLAYER
+               
 
                 //Giocata player
                 if (!Util.CheckBlackJack(dealer.hand))
                 {
+                    #region GIOCATA PLAYER
+
                     int dealerFirstCardPoint = Util.PointOf(dealerFirstCard);
                     for (int playerhandID = 0; playerhandID < player.hands.Count; playerhandID++)
                     {
@@ -162,7 +166,7 @@ namespace BlackJackSimul
                     #endregion GIOCATA PLAYER
 
 
-                #region GIOCATA DEALER
+                    #region GIOCATA DEALER
 
                 //Controllo che il player non abbia fatto tutti blackjack o bust
                 int countEnded = 0;
@@ -188,18 +192,24 @@ namespace BlackJackSimul
                     }
 
                 dealer.WriteResult();
+                }
 
                 #endregion GIOCATA DEALER
-                }
+                
                 else
                 {
                     player.WriteResult();
                     dealer.WriteResult();
                 }
 
+               
+
+                StringBuilder cardSeq = new StringBuilder();
+                cardSeq.Append("D:");
+
                 foreach (string card in dealer.hand.Cards)
                 {
-                    playRecord.CardSequence += card + ",";
+                    cardSeq.Append(card + ",");
                     hl_counter.UpdateMainCounters(card);
                     rapc_counter.UpdateMainCounters(card);
                     playRecord.HL_RunningCounter = hl_counter.RunningCounter;
@@ -207,11 +217,13 @@ namespace BlackJackSimul
                     playRecord.RAPC_RunningCounter = rapc_counter.RunningCounter;
                     playRecord.RAPC_TrueCounter = rapc_counter.TrueCounter;
                 }
-                   
+
+                cardSeq.Append("  P:");
+
                 foreach (Hand hand in player.hands)
                     foreach (string card in hand.Cards)
                     {
-                        playRecord.CardSequence += card + ",";
+                        cardSeq.Append(card + ",");
                         hl_counter.UpdateMainCounters(card);
                         rapc_counter.UpdateMainCounters(card);
                         playRecord.HL_RunningCounter = hl_counter.RunningCounter;
@@ -220,7 +232,9 @@ namespace BlackJackSimul
                         playRecord.RAPC_TrueCounter = rapc_counter.TrueCounter;
                     }
 
-                if(cardSequence.Count < MazziDaEstrarrePerShoe * Costanti.N_CARTE_MAZZO)
+                playRecord.CardSequence = cardSeq.ToString();
+
+                if (cardSequence.Count < MazziDaEstrarrePerShoe * Costanti.N_CARTE_MAZZO)
                 {
                     playRecord.HL_RunningCounter = 0;
                     playRecord.HL_TrueCounter = 0;
@@ -228,22 +242,27 @@ namespace BlackJackSimul
                     playRecord.RAPC_TrueCounter = 0;
                 }
 
-                playFile.WriteData(playRecord);
-                       
-
                 //Risultato della mano
-                CheckTheWinner(player, dealer);
+                var results = CheckTheWinner(player, dealer);
+                playRecord.Result = "";
+                foreach (string res in results)
+                    playRecord.Result += res;
 
-                //  Console.ReadKey();     
+                //  Console.ReadKey();
+
+                playRecord.PlayerStake = Player.Stake.ToString();
+                playFile.WriteData(playRecord);
 
             }
         }
 
-        static void CheckTheWinner(Player player, Dealer dealer)
+        static List<string> CheckTheWinner(Player player, Dealer dealer)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             var dealerHand = dealer.hand;
             var punteggioDealer = dealerHand.punteggio.Value;
+            var results = new List<string>();
+            string result = "";
 
             foreach (Hand playerHand in player.hands)
             {
@@ -252,58 +271,102 @@ namespace BlackJackSimul
                 //Risultato partita
                 if (punteggioPlayer > 21)
                 {
-                    Player.ManiVinte--;
-                    Player.TotVincita -= playerHand.Puntata;
-                    log.WriteLine($"Il dealer vince");
+                    result = "BUST";
                 }
 
                 else if (punteggioDealer > 21)
                 {
-                    Player.ManiVinte++;
-                    Player.TotVincita += playerHand.Puntata;
-                    log.WriteLine($"Il player vince");
+                    result = "WIN";
                 }
 
                 else if (Util.CheckBlackJack(playerHand))
                 {
-                    Player.CounterBlackJack++;
                     if (!Util.CheckBlackJack(dealerHand))
                     {
-                        Player.ManiVinte++;
-                        Player.TotVincita += (float)playerHand.Puntata * (float)1.5;
-                        log.WriteLine($"Il player vince");
+                        result = "WIN_BJ";
                     }
                     else
                     {
                         Dealer.CounterBlackJack++;
                         if (Costanti.f_console)
+                        {
+                            result = "LOSE_BJ";
                             log.WriteLine($"Push");
+                        }
                     }
                 }
 
                 else if (punteggioPlayer > punteggioDealer)
                 {
-                    Player.ManiVinte++;
-                    Player.TotVincita += playerHand.Puntata;
-                    log.WriteLine($"Il player vince");
+                    result = "WIN";
                 }
 
                 else if (punteggioPlayer < punteggioDealer)
                 {
-                    Player.ManiVinte--;
-                    Player.TotVincita -= playerHand.Puntata;
-                    log.WriteLine($"Il dealer vince");
+                    result = "LOSE";
                 }
 
                 else
                 {
-                    Player.ManiPareggiate++;
-                    log.WriteLine($"Push");
+                    result = "PUSH";
                 }
-            }
 
+                switch (result)
+                {
+                    case "BUST":
+                        {
+                            Player.ManiVinte--;
+                            Player.Stake -= playerHand.Puntata;
+                            log.WriteLine($"Il dealer vince");
+                            break;
+                        }
+                    case "LOSE":
+                        {
+                            Player.ManiVinte--;
+                            Player.Stake -= playerHand.Puntata;
+                            log.WriteLine($"Il dealer vince");
+                            break;
+                        }
+                    case "WIN":
+                        {
+                            Player.ManiVinte++;
+                            Player.Stake += playerHand.Puntata;
+                            log.WriteLine($"Il player vince");
+                            break;
+                        }
+                    case "PUSH":
+                        {
+                            Player.ManiPareggiate++;
+                            log.WriteLine($"Push");
+                            break;
+                        }
+                    case "WIN_BJ":
+                        {
+                            Player.CounterBlackJack++;
+                            Player.ManiVinte++;
+                            Player.Stake += playerHand.Puntata*1.5f;
+                            break;
+                        }
+                    case "PUSH_BJ":
+                        {
+                            Player.CounterBlackJack++;
+                            Player.ManiPareggiate++;
+                            log.WriteLine($"Push");
+                            break;
+                        }
+                    default: break;
+
+                }
+
+                results.Add(result);
+
+
+            }
+            
             Console.ResetColor();
-            log.WriteLine($"Saldo player: {Player.TotVincita}");
+            log.WriteLine($"Saldo player: {Player.Stake}");
+
+            return results;
 
         }
 

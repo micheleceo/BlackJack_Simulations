@@ -19,7 +19,6 @@ namespace BlackJackSimul
         /// Numero di carte totali
         /// </summary>
         public int TotCardNumber { get; }
-       // public int CarteDaEstrarre { get; }
 
         private Random rand = new Random();
 
@@ -31,23 +30,23 @@ namespace BlackJackSimul
         /// </summary>
         /// <param name="deckNumber"></param>
         /// <param name="deckToUse"></param>
-        public Shoe(int totDeckNumber, int totdeckNumberToUse)
+        public Shoe(int totDeckNumber, int totdeckNumberToUse, List<string> deck)
         {
             TotDeckNumber = totDeckNumber;
             TotCardNumber = TotDeckNumber * Costanti.N_CARTE_MAZZO;
-          //  CarteDaEstrarre = totdeckNumberToUse * Costanti.N_CARTE_MAZZO;
 
             temp_cards = new List<string>();
             for (int k = 1; k <= TotDeckNumber; k++)
-                for (int j = 1; j <= Costanti.N_SEMI; j++)
-                {
-                    temp_cards.Add("A");
-                    for (int c = 2; c <= 10; c++)
-                        temp_cards.Add(c.ToString());
-                    temp_cards.Add("J");
-                    temp_cards.Add("Q");
-                    temp_cards.Add("K");
-                }
+                temp_cards.AddRange(deck);
+                //for (int j = 1; j <= Costanti.N_SEMI; j++)
+                //{
+                //    temp_cards.Add("A");
+                //    for (int c = 2; c <= 10; c++)
+                //        temp_cards.Add(c.ToString());
+                //    temp_cards.Add("J");
+                //    temp_cards.Add("Q");
+                //    temp_cards.Add("K");
+                //}
         }
 
         /// <summary>
@@ -87,7 +86,6 @@ namespace BlackJackSimul
             cards.TryDequeue(out var card);
             return card;
         }
-
 
     }
 }

@@ -12,6 +12,17 @@ namespace BlackJackSimul
     {
         static void Main(string[] args)
         {
+
+           // CreateSeqeunceCSV();
+
+            Simulation simulation = new Simulation(Costanti.N_SHOES, Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
+            simulation.Start();
+
+        }
+
+
+        public static void CreateSeqeunceCSV()
+        {
             // Single extraction data
             var se_data = new SingleExstractionData();
 
@@ -22,54 +33,53 @@ namespace BlackJackSimul
             FileCSV fileCSV = new FileCSV("Data.csv");
             fileCSV.WriteHeader(";", se_data);
 
+            List<string> regularDeck = CardDeck.Create();
+
             //Ciclo sugli shoe
-            for (int nShoes=1; nShoes<= Costanti.N_SHOES; nShoes++)
+            for (int nShoes = 1; nShoes <= Costanti.N_SHOES; nShoes++)
             {
-                   // Statistic data
-                   se_data = new SingleExstractionData();
+                // Statistic data
+                se_data = new SingleExstractionData();
 
-                   // Creazione shoe
-                   var shoe = new Shoe(Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
-                   shoe.Shuffle();
-                   
-                   //Creazione dei counter
-                   var hl_counter = new HL_Counter(shoe);
-                   var rapc_counter = new RAPC_Counter(shoe);
+                // Creazione shoe
+                var shoe = new Shoe(Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE, regularDeck);
+                shoe.Shuffle();
 
-                   se_data.ShoeNumber = nShoes;
+                //Creazione dei counter
+                var hl_counter = new HL_Counter(shoe);
+                var rapc_counter = new RAPC_Counter(shoe);
 
-                   //Ciclo delle estrazioni per shoe
-                   for (int n = 1; n <= Costanti.N_CARTE_DA_ESTRARRE_PER_SHOE; n++)
-                   {
-                       if (n % Costanti.N_CARTE_MAZZO == 0)
+                se_data.ShoeNumber = nShoes;
+
+                //Ciclo delle estrazioni per shoe
+                for (int n = 1; n <= Costanti.N_CARTE_DA_ESTRARRE_PER_SHOE; n++)
+                {
+                    if (n % Costanti.N_CARTE_MAZZO == 0)
                         se_data.deckNumber++;
 
-                        //Prendi una carta
-                        se_data.Card = shoe.GetCard();
-                        
-                        //Aggiornamento counter HL
-                        hl_counter.UpdateMainCounters(se_data.Card);
-                        se_data.HL_RunningCounter = hl_counter.RunningCounter;
-                        se_data.HL_TrueCounter = hl_counter.TrueCounter;
-                        stat_data.memory.HL_TrueCountersequence.Add(hl_counter.TrueCounter);
+                    //Prendi una carta
+                    se_data.Card = shoe.GetCard();
 
-                        //Aggiornamento counter RAPC
-                        rapc_counter.UpdateMainCounters(se_data.Card);
-                        se_data.RAPC_RunningCounter = rapc_counter.RunningCounter;
-                        se_data.RAPC_TrueCounter = rapc_counter.TrueCounter;
-                        stat_data.memory.RAPC_TrueCounterSequence.Add(rapc_counter.TrueCounter);
+                    //Aggiornamento counter HL
+                    hl_counter.UpdateMainCounters(se_data.Card);
+                    se_data.HL_RunningCounter = hl_counter.RunningCounter;
+                    se_data.HL_TrueCounter = hl_counter.TrueCounter;
+                    stat_data.memory.HL_TrueCountersequence.Add(hl_counter.TrueCounter);
 
-                        fileCSV.WriteData(se_data);
-                   }
+                    //Aggiornamento counter RAPC
+                    rapc_counter.UpdateMainCounters(se_data.Card);
+                    se_data.RAPC_RunningCounter = rapc_counter.RunningCounter;
+                    se_data.RAPC_TrueCounter = rapc_counter.TrueCounter;
+                    stat_data.memory.RAPC_TrueCounterSequence.Add(rapc_counter.TrueCounter);
+
+                    fileCSV.WriteData(se_data);
+                }
 
             }
 
             fileCSV.Close();
 
             WriteStatistic(stat_data);
-
-            Simulation simulation = new Simulation(Costanti.N_SHOES, Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
-            simulation.Start();
 
         }
 
