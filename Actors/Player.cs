@@ -84,7 +84,7 @@ namespace BlackJack
             }
         }
 
-        public void WriteResult(Hand hand)
+        public void WriteHandResult(Hand hand)
         {
             if(Costanti.f_console)
             {

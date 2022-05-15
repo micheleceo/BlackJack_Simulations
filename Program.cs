@@ -141,7 +141,7 @@ namespace BlackJack
                         if(Costanti.f_console)
                             if (playerhandID > 0)
                                 log.WriteLine("---");
-                        player.WriteResult(playerHand);
+                        player.WriteHandResult(playerHand);
 
                         while (!playerHand.f_bust &&
                                 response != "STAND" &&
@@ -191,7 +191,7 @@ namespace BlackJack
                                     log.WriteLine("---");
                             }
                            
-                            player.WriteResult(playerHand);
+                            player.WriteHandResult(playerHand);
 
                         }
                      }
