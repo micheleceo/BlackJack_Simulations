@@ -8,18 +8,7 @@ namespace BlackJackSimul
 {
     public abstract class AActor : IActor
     {
-        /// <summary>
-        /// Mani vinte
-        /// </summary>
-        static public int ManiVinte { get; set; }
-        /// <summary>
-        /// Mani pareggiate
-        /// </summary>
-        static public int ManiPareggiate { get; set; }
-        /// <summary>
-        /// Contatore di blackjack
-        /// </summary>
-        static public int CounterBlackJack { get; set; }
+        static public int TotalBlackJack { get; set; }
 
         /// <summary>
         /// Creazione nuova mano

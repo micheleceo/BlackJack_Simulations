@@ -10,6 +10,9 @@ namespace BlackJackSimul
     {
         public List<string> Cards = new List<string> { };
         public Punteggio punteggio;
+        public string Result { get; set; } = "";
+
+        public float BetResult { get; set; } = 0;
         public float Puntata { get; set; } = 1;
 
         public bool f_double { get; set; } = false;

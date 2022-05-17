@@ -18,7 +18,17 @@ namespace BlackJackSimul
 
         public static float Stake = 0;
 
-        public static float TotalPlayed = 0;
+        public static float TotalBet = 0;
+
+        public static int TotalHands = 0;
+
+        public static int TotalHWin = 0;
+
+        public static int TotalHLose = 0;
+
+        public static int TotalHBust = 0;
+
+        public static int TotalHPush = 0;
 
 
         public override void NewHand(bool f_split = false)
@@ -42,7 +52,6 @@ namespace BlackJackSimul
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
             string response = "";
-          //  BasicStrategyL basic = new BasicStrategyL();
 
             response = basic.ApplyStrategy(hand,dealerFirstCard);
 

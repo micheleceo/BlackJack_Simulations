@@ -23,6 +23,6 @@ namespace BlackJackSimul
 
         //Console
         public const bool f_console = false;
-        public const bool f_txtLog = true;
+     //   public const bool f_txtLog = true;
     }
 }
