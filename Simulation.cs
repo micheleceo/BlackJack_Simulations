@@ -179,43 +179,42 @@ namespace BlackJackSimul
 
                     #region GIOCATA DEALER
 
-                //Controllo che il player non abbia fatto tutti blackjack o bust
-                int countEnded = 0;
-                foreach (Hand playerHand in player.hands)
-                {
-                    if (Util.CheckBlackJack(playerHand))
-                        countEnded++;
-                }
-
-
-                string dealerAction = "";
-                if (countEnded != player.hands.Count)
-                    while (dealer.hand.punteggio.Value < 21 &&
-                            !dealer.hand.f_bust &&
-                            dealerAction != "STAND")
+                    //Controllo che il player non abbia fatto tutti blackjack o bust
+                    int countEnded = 0;
+                    foreach (Hand playerHand in player.hands)
                     {
-                        dealer.WriteResult();
-                        dealerAction = dealer.ApplicaRegole();
-                        log.WriteLine(dealerAction);
-                        if (dealerAction == "HIT")
-                            dealer.GiveCard(cardSequence.Dequeue());
-
+                        if (Util.CheckBlackJack(playerHand))
+                            countEnded++;
                     }
 
-                dealer.WriteResult();
+
+                    string dealerAction = "";
+                    if (countEnded != player.hands.Count)
+                        while (dealer.hand.punteggio.Value < 21 &&
+                                !dealer.hand.f_bust &&
+                                dealerAction != "STAND")
+                        {
+                            dealer.WriteResult();
+                            dealerAction = dealer.ApplicaRegole();
+                            log.WriteLine(dealerAction);
+                            if (dealerAction == "HIT")
+                                dealer.GiveCard(cardSequence.Dequeue());
+
+                        }
+
+                    dealer.WriteResult();
                 }
 
                 #endregion GIOCATA DEALER
-                
+
                 else
                 {
                     player.WriteResult();
                     dealer.WriteResult();
                 }
 
-                //Check the winner
+                //Check the results for the play
                 CheckTheWinner(player, dealer);
-
 
                 StringBuilder cardSeq = new StringBuilder();
                 cardSeq.Append("D:");
@@ -261,13 +260,13 @@ namespace BlackJackSimul
 
                 playRecord.CardSequence = cardSeq.ToString();
 
-                if (cardSequence.Count < MazziDaEstrarrePerShoe * Costanti.N_CARTE_MAZZO)
-                {
-                    playRecord.HL_RunningCounter = 0;
-                    playRecord.HL_TrueCounter = 0;
-                    playRecord.RAPC_RunningCounter = 0;
-                    playRecord.RAPC_TrueCounter = 0;
-                }
+                //if (cardSequence.Count < MazziDaEstrarrePerShoe * Costanti.N_CARTE_MAZZO)
+                //{
+                //    playRecord.HL_RunningCounter = 0;
+                //    playRecord.HL_TrueCounter = 0;
+                //    playRecord.RAPC_RunningCounter = 0;
+                //    playRecord.RAPC_TrueCounter = 0;
+                //}
 
                 //  Console.ReadKey();
 
@@ -276,7 +275,7 @@ namespace BlackJackSimul
 
             }
         }
-       
+
         /// <summary>
         /// Check the results
         /// </summary>
