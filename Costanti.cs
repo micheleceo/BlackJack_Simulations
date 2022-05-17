@@ -20,6 +20,8 @@ namespace BlackJackSimul
         public const int N_CARTE_DA_ESTRARRE_PER_SHOE = 4 * N_CARTE_MAZZO;
         //Iterazioni simulazione
         public const int N_SHOES = 10;
+        //Rules 
+        public static bool f_dealer_Soft17_hit = false;
 
         //Console
         public const bool f_console = false;

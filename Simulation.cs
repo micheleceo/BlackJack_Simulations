@@ -104,6 +104,7 @@ namespace BlackJackSimul
 
 
                 //Giocate
+                
                 if (!Util.CheckBlackJack(dealer.hand))
                 {
                     #region GIOCATA PLAYER
@@ -123,7 +124,7 @@ namespace BlackJackSimul
                                 response != "STAND" &&
                                 !playerHand.f_double)
                         {
-                            response = player.Ask(playerhandID, dealerFirstCardPoint);
+                            response = player.AskAction(playerhandID, dealerFirstCardPoint);
 
                             if (response == "HIT")
                                 player.GiveCard(cardSequence.Dequeue(), playerhandID);
@@ -169,33 +170,40 @@ namespace BlackJackSimul
 
                         }
 
-                        Player.TotalBet += playerHand.Puntata;
                         Player.TotalHands++;
-                        player.WriteHandResult(playerHand);
+                        Player.TotalBet += playerHand.Puntata;
+                        player.WriteResult();
+
+                       
+
+
                     }
+                   
+
+
 
                     #endregion GIOCATA PLAYER
 
 
                     #region GIOCATA DEALER
 
-                    //Controllo che il player non abbia fatto tutti blackjack o bust
-                    int countEnded = 0;
+                    //Controllo che il player non abbia blackjack
+                    int countBlackJack = 0;
                     foreach (Hand playerHand in player.hands)
                     {
                         if (Util.CheckBlackJack(playerHand))
-                            countEnded++;
+                            countBlackJack++;
                     }
 
 
                     string dealerAction = "";
-                    if (countEnded != player.hands.Count)
+                    if (countBlackJack != player.hands.Count)
                         while (dealer.hand.punteggio.Value < 21 &&
-                                !dealer.hand.f_bust &&
-                                dealerAction != "STAND")
+                               !dealer.hand.f_bust &&
+                               dealerAction != "STAND")
                         {
                             dealer.WriteResult();
-                            dealerAction = dealer.ApplicaRegole();
+                            dealerAction = dealer.ApplyRules();
                             log.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());
@@ -204,11 +212,13 @@ namespace BlackJackSimul
 
                     dealer.WriteResult();
                 }
-
+         
                 #endregion GIOCATA DEALER
 
                 else
                 {
+                    Player.TotalHands++;
+                    Player.TotalBet += player.hands[0].Puntata;
                     player.WriteResult();
                     dealer.WriteResult();
                 }

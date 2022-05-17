@@ -36,7 +36,7 @@ namespace BlackJackSimul
             hands.Add(new Hand());
         }
 
-        public string Ask(int handID, int enemyPoint)
+        public string AskAction(int handID, int enemyPoint)
         {
             if (hands[handID].punteggio.Value >= 21)
                 return "STAND";
@@ -57,22 +57,6 @@ namespace BlackJackSimul
 
             if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split))
                 response = "HIT";
-
-            return response;
-        }
-
-
-        string ApplicaStrategiaDummy()
-        {
-            string response = "";
-
-            //Strategia base
-            if (hands[0].punteggio.Value <= 16)
-                response = "HIT";
-            else if (hands[0].punteggio.Value >= 17 && hands[0].punteggio.Value <= 21)
-                response = "STAND";
-            else
-                response = "SBALLATO";
 
             return response;
         }

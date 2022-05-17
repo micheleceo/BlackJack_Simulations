@@ -25,7 +25,7 @@ namespace BlackJackSimul
             hand.AddCard(card);
         }
 
-        public string ApplicaRegole()
+        public string ApplyRules()
         {
             var punteggio = hand.punteggio.Value;
             string response = "";
@@ -34,10 +34,17 @@ namespace BlackJackSimul
 
             if (punteggio <= 16)
                 response = "HIT";
-            else if (punteggio >= 17 && punteggio < 21)
+            else if(punteggio ==17)
+            {
+                if(hand.punteggio.f_soft && Costanti.f_dealer_Soft17_hit)
+                    response = "HIT";
+                else
+                    response = "STAND";
+            }
+            else if (punteggio >=18 && punteggio < 21)
                 response = "STAND";
             else
-                response = "AFFANGUL";
+                response = "BUST";
 
             return response;
         }
