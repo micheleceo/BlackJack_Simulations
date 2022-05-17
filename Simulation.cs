@@ -251,7 +251,7 @@ namespace BlackJackSimul
                 //  Console.ReadKey();
 
                 playRecord.PlayerStake = Player.Stake.ToString();
-                playFile.WriteData(playRecord);
+                playFile.WriteLine(playRecord);
 
             }
         }

@@ -72,7 +72,7 @@ namespace BlackJackSimul
                     se_data.RAPC_TrueCounter = rapc_counter.TrueCounter;
                     stat_data.memory.RAPC_TrueCounterSequence.Add(rapc_counter.TrueCounter);
 
-                    fileCSV.WriteData(se_data);
+                    fileCSV.WriteLine(se_data);
                 }
 
             }
