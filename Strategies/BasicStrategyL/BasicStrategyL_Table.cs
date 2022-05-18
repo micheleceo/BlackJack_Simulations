@@ -11,8 +11,6 @@ namespace BlackJackSimul.StrategiesTables
         //basic strategy table in two dimensional array
         public string[,] Response = new string[32, 10];
 
-     
-
         public BasicStrategyL_Table()
         {
             //18+

@@ -38,7 +38,7 @@ namespace BlackJackSimul
                 else
                     response = "STAND";
             }
-            else if (punteggio >=18 && punteggio < 21)
+            else if (punteggio >=18 && punteggio <= 21)
                 response = "STAND";
             else
                 response = "BUST";

@@ -178,9 +178,6 @@ namespace BlackJackSimul
 
 
                     }
-                   
-
-
 
                     #endregion GIOCATA PLAYER
 
