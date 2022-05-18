@@ -13,14 +13,19 @@ namespace BlackJackSimul
     {
         static void Main(string[] args)
         {
+            Config conf = new Config();
+            try
+            {
+                conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
+            }
+            catch
+            {
+                Console.WriteLine("Configuration.json file not found");
+            }
+           
+            //    File.WriteAllText("Configuration.json", JsonConvert.SerializeObject(conf, Formatting.Indented));
 
-           // var conf = new Config();
-           // File.WriteAllText("Configuration.json", JsonConvert.SerializeObject(conf, Formatting.Indented));
-
-            Config conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
-            string configJa = JsonConvert.SerializeObject(conf, Formatting.Indented);
-
-            Simulation simulation = new Simulation(Costanti.N_SHOES, Costanti.N_MAZZI_PER_SHOE, Costanti.N_MAZZI_DA_ESTRARRE_PER_SHOE);
+            Simulation simulation = new Simulation(conf);
             simulation.Start();
 
         }

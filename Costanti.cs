@@ -14,17 +14,8 @@ namespace BlackJackSimul
         public const int N_CARTE_MAZZO = N_TIPI_CARTE * N_SEMI;
 
         //TODO: rendere configurabili
-        //Definizione Shoe
-        public const int N_MAZZI_PER_SHOE = 8;
-        public const int N_MAZZI_DA_ESTRARRE_PER_SHOE = 4;
-        public const int N_CARTE_DA_ESTRARRE_PER_SHOE = 4 * N_CARTE_MAZZO;
-        //Iterazioni simulazione
-        public const int N_SHOES = 1000000;
-        //Rules 
-        public const bool f_dealer_Soft17_hit = false;
-
         //Console
-        public const bool f_console = false;
+        public const bool f_print_hands_on_console = true;
      //   public const bool f_txtLog = true;
     }
 }

@@ -9,11 +9,11 @@ namespace BlackJackSimul
 
     public class Config
     {
-        public int ShoeDeckTotalNumber { get; set; }
-        public int ShoeDeckToExtractNumber { get; set; }
-        public int SimulationTotalShoes { get; set; }
-        public bool f_dealer_Soft17_hit { get; set; }
-        public bool f_console { get; set; }
+        public int ShoeDeckTotalNumber { get; set; } = 8;
+        public int ShoeDeckToExtractNumber { get; set; } = 4;
+        public int SimulationTotalShoes { get; set; } = 100;
+        public bool f_dealer_Soft17_hit { get; set; } = false;
+        public bool f_console { get; set; } = false;
     }
 
 

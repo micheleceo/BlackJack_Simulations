@@ -65,7 +65,7 @@ namespace BlackJackSimul
         
         public void WriteResult()
         {
-            if (Costanti.f_console)
+            if (Costanti.f_print_hands_on_console)
             {
                 foreach (Hand hand in hands)
                 {
@@ -85,7 +85,7 @@ namespace BlackJackSimul
 
         public void WriteHandResult(Hand hand)
         {
-            if(Costanti.f_console)
+            if(Costanti.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 StringBuilder actorString = new StringBuilder();

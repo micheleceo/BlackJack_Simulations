@@ -11,11 +11,8 @@ namespace BlackJackSimul
         FileCSV playFile;
         PlayRecord playRecord = new PlayRecord();
         static Log log = new Log();
+        Config conf;
 
-        int ShoeNumber { get; set; } = 0;
-        int MazziPerShoe { get; set; } = 0;
-        int MazziDaEstrarrePerShoe { get; set; } = 0;
-        int PlayNumber { get; set; } = 0;
         Shoe shoe { get; set; }
         
         /// <summary>
@@ -24,11 +21,9 @@ namespace BlackJackSimul
         /// <param name="_shoeNumber"></param>
         /// <param name="_nMazziPerShoe"></param>
         /// <param name="_nMazziDaEstrarePerShoe"></param>
-        public Simulation(int _shoeNumber, int _nMazziPerShoe, int _nMazziDaEstrarePerShoe)
+        public Simulation(Config _conf)
         {
-            ShoeNumber = _shoeNumber;
-            MazziPerShoe = _nMazziPerShoe;
-            MazziDaEstrarrePerShoe = _nMazziDaEstrarePerShoe;
+            conf = _conf;
         }
         
         /// <summary>
@@ -41,9 +36,9 @@ namespace BlackJackSimul
 
             List<string> deck = CardDeck.Create();
 
-            for (int nShoe = 1; nShoe <= ShoeNumber; nShoe++)
+            for (int nShoe = 1; nShoe <= conf.SimulationTotalShoes; nShoe++)
             {
-                shoe = new Shoe(MazziPerShoe, MazziDaEstrarrePerShoe, deck);
+                shoe = new Shoe(conf.ShoeDeckTotalNumber, conf.ShoeDeckToExtractNumber, deck);
                 shoe.Shuffle();
                 playRecord.ShoeID = nShoe;
                 PlayShoe(shoe);
@@ -64,7 +59,7 @@ namespace BlackJackSimul
 
             Queue<string> cardSequence = shoe.cards;
 
-            while (cardSequence.Count >= MazziDaEstrarrePerShoe*Costanti.N_CARTE_MAZZO)
+            while (cardSequence.Count >= conf.ShoeDeckToExtractNumber * Costanti.N_CARTE_MAZZO)
             {
                 playRecord.PlayID++;
                 playRecord.CardSequence = "";
@@ -98,6 +93,7 @@ namespace BlackJackSimul
 
 
                 // Console.ForegroundColor = ConsoleColor.White;
+                if(!Costanti.f_print_hands_on_console)
                 Console.Write($"\r Shoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.WriteLine($"DEALER: { dealerFirstCard}");
@@ -115,7 +111,7 @@ namespace BlackJackSimul
                         var playerHand = player.hands[playerhandID];
                         string response = "";
 
-                        if (Costanti.f_console)
+                        if (Costanti.f_print_hands_on_console)
                             if (playerhandID > 0)
                                 log.WriteLine("---");
                         player.WriteHandResult(playerHand);
@@ -161,7 +157,7 @@ namespace BlackJackSimul
                                 }
                             }
 
-                            if (Costanti.f_console)
+                            if (conf.f_console)
                             {
                                 log.WriteLine(response);
                                 if (response == "SPLIT")
@@ -200,7 +196,7 @@ namespace BlackJackSimul
                                dealerAction != "STAND")
                         {
                             dealer.WriteResult();
-                            dealerAction = dealer.ApplyRules();
+                            dealerAction = dealer.ApplyRules(conf);
                             log.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());

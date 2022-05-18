@@ -22,7 +22,7 @@ namespace BlackJackSimul
             hand.AddCard(card);
         }
 
-        public string ApplyRules()
+        public string ApplyRules(Config conf)
         {
             var punteggio = hand.punteggio.Value;
             string response = "";
@@ -33,7 +33,7 @@ namespace BlackJackSimul
                 response = "HIT";
             else if(punteggio ==17)
             {
-                if(hand.punteggio.f_soft && Costanti.f_dealer_Soft17_hit)
+                if(hand.punteggio.f_soft && conf.f_dealer_Soft17_hit)
                     response = "HIT";
                 else
                     response = "STAND";
@@ -48,7 +48,7 @@ namespace BlackJackSimul
 
         public void WriteResult()
         {
-            if(Costanti.f_console)
+            if(Costanti.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 StringBuilder actorString = new StringBuilder();
