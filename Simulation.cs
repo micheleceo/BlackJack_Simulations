@@ -45,6 +45,9 @@ namespace BlackJackSimul
             }
 
             playFile.Close();
+
+            var rtp = 100 + (Player.Stake / playRecord.TotalBet) * 100;
+            Console.WriteLine($"\nRTP: {rtp}%");
         }
         
         /// <summary>
@@ -94,7 +97,7 @@ namespace BlackJackSimul
 
                 // Console.ForegroundColor = ConsoleColor.White;
                 if(!Costanti.f_print_hands_on_console)
-                Console.Write($"\r Shoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
+                    Console.Write($"\r Shoe {playRecord.ShoeID}");
                 log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.WriteLine($"DEALER: { dealerFirstCard}");
 
@@ -277,6 +280,8 @@ namespace BlackJackSimul
                 playFile.WriteLine(playRecord);
 
             }
+
+           
         }
 
         /// <summary>

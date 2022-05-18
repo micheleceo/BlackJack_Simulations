@@ -15,7 +15,7 @@ namespace BlackJackSimul
 
         //TODO: rendere configurabili
         //Console
-        public const bool f_print_hands_on_console = true;
+        public const bool f_print_hands_on_console = false;
      //   public const bool f_txtLog = true;
     }
 }
