@@ -51,11 +51,12 @@ namespace BlackJackSimul
 
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
-            string response = "";
+            //TODO: Check double and split again
 
-            response = basic.ApplyStrategy(hand,dealerFirstCard);
+            var response = basic.ApplyStrategy(hand,dealerFirstCard);
 
-            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split))
+            //Correct if double down is not possible
+            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split) )
                 response = "HIT";
 
             return response;
