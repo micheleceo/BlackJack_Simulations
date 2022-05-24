@@ -9,7 +9,7 @@ namespace BlackJackSimul
         public string Result { get; set; } = "";
 
         public float BetResult { get; set; } = 0;
-        public float Puntata { get; set; } = 1;
+        public float Bet { get; set; } = 1;
 
         public bool f_double { get; set; } = false;
 
@@ -17,7 +17,7 @@ namespace BlackJackSimul
 
         public bool f_bust { get; set; } = false;
 
-        public bool f_split { get; set; } = false;
+        public bool f_splitted{ get; set; } = false;
 
         public void AddCard(string card)
         {
@@ -37,7 +37,7 @@ namespace BlackJackSimul
             CardValue.Sort();
 
             //Controllo se ho una coppia (che non sia già uno split)
-            if (CardValue.Count == 2 && CardValue[0] == CardValue[1] && !f_split)
+            if (CardValue.Count == 2 && CardValue[0] == CardValue[1] && !f_splitted)
                 f_coppia = true;
             else
                 f_coppia = false;

@@ -14,7 +14,7 @@ namespace BlackJackSimul
         /// Creazione nuova mano
         /// </summary>
         /// <param name="f_split">In caso di split segna il flag</param>
-        public abstract void NewHand(bool f_split = false);
+        public abstract void NewHand();
 
 
         /// <summary>

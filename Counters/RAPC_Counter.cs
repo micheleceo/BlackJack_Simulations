@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJackSimul.CountingStrategy
 {
-    class RAPC_Counter: ACounter
+    public class RAPC_Counter: ACounter
     {
         public RAPC_Counter(Shoe shoe) : base(shoe) { }
 

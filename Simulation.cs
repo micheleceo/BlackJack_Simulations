@@ -57,8 +57,9 @@ namespace BlackJackSimul
         private void PlayShoe(Shoe shoe)
         {
             //Creazione dei counter
-            var hl_counter = new HL_Counter(shoe);
-            var rapc_counter = new RAPC_Counter(shoe);
+            var countManager = new CountersManager(shoe);
+         //   var hl_counter = new HL_Counter(shoe);
+        //    var rapc_counter = new RAPC_Counter(shoe);
 
             Queue<string> cardSequence = shoe.cards;
 
@@ -133,7 +134,7 @@ namespace BlackJackSimul
                                 //Check double
                                 if (playerHand.Cards.Count == 2)
                                 {
-                                    playerHand.Puntata *= 2;
+                                    playerHand.Bet *= 2;
                                     playerHand.f_double = true;
                                 }
                                 //Se non si può raddoppiare
@@ -145,10 +146,10 @@ namespace BlackJackSimul
                                 if (playerHand.Cards.Count == 2 && playerHand.f_coppia)
                                 {
                                     //Creo nuova mano e sposto la carta da una mano all'altra
-                                    player.NewHand(true);
+                                    player.NewHand();
                                     //Setto il flag split
-                                    playerHand.f_split = true;
-                                    player.hands[playerhandID + 1].f_split = true;
+                                    foreach (Hand h in player.hands)
+                                        h.f_splitted = true;
 
                                     player.GiveCard(playerHand.Cards[1], playerhandID + 1);
                                     playerHand.Cards.RemoveAt(playerHand.Cards.Count - 1);
@@ -170,12 +171,8 @@ namespace BlackJackSimul
                         }
 
                         Player.TotalHands++;
-                        Player.TotalBet += playerHand.Puntata;
+                        Player.TotalBet += playerHand.Bet;
                         player.WriteResult();
-
-                       
-
-
                     }
 
                     #endregion GIOCATA PLAYER
@@ -207,14 +204,16 @@ namespace BlackJackSimul
                         }
 
                     dealer.WriteResult();
+
+
+                    #endregion GIOCATA DEALER
+
                 }
-         
-                #endregion GIOCATA DEALER
 
                 else
                 {
                     Player.TotalHands++;
-                    Player.TotalBet += player.hands[0].Puntata;
+                    Player.TotalBet += player.hands[0].Bet;
                     player.WriteResult();
                     dealer.WriteResult();
                 }
@@ -228,33 +227,32 @@ namespace BlackJackSimul
                 foreach (string card in dealer.hand.Cards)
                 {
                     cardSeq.Append(card + ",");
-                    hl_counter.UpdateMainCounters(card);
-                    rapc_counter.UpdateMainCounters(card);
-                    playRecord.HL_RunningCounter = hl_counter.RunningCounter;
-                    playRecord.HL_TrueCounter = hl_counter.TrueCounter;
-                    playRecord.RAPC_RunningCounter = rapc_counter.RunningCounter;
-                    playRecord.RAPC_TrueCounter = rapc_counter.TrueCounter;
+                    countManager.UpdateAllCounters(card);
                 }
 
                 cardSeq.Append("  P:");
 
-                playRecord.Result = "";
-                playRecord.BetResult = 0;
+                var result = "";
+                var bet_result = 0f;
                 foreach (Hand playerHand in player.hands)
                 {
-                    playRecord.Result += playerHand.Result;
-                    playRecord.BetResult += playerHand.BetResult;
+                    result += playerHand.Result + " ";
+                    bet_result += playerHand.BetResult;
                     foreach (string card in playerHand.Cards)
                     {
                         cardSeq.Append(card + ",");
-                        hl_counter.UpdateMainCounters(card);
-                        rapc_counter.UpdateMainCounters(card);
-                        playRecord.HL_RunningCounter = hl_counter.RunningCounter;
-                        playRecord.HL_TrueCounter = hl_counter.TrueCounter;
-                        playRecord.RAPC_RunningCounter = rapc_counter.RunningCounter;
-                        playRecord.RAPC_TrueCounter = rapc_counter.TrueCounter;
+                        countManager.UpdateAllCounters(card);
                     }
                 }
+
+                #region UPDATE PLAY RECORD
+
+                playRecord.Result = result;
+                playRecord.BetResult = bet_result;
+                playRecord.HL_RunningCounter = countManager.hl_counter.RunningCounter;
+                playRecord.HL_TrueCounter = countManager.hl_counter.TrueCounter;
+                playRecord.RAPC_RunningCounter = countManager.rapc_counter.RunningCounter;
+                playRecord.RAPC_TrueCounter = countManager.rapc_counter.TrueCounter;
 
                 playRecord.TotalBet = Player.TotalBet;
                 playRecord.TotalHands = Player.TotalHands;
@@ -266,18 +264,14 @@ namespace BlackJackSimul
 
                 playRecord.CardSequence = cardSeq.ToString();
 
-                //if (cardSequence.Count < MazziDaEstrarrePerShoe * Costanti.N_CARTE_MAZZO)
-                //{
-                //    playRecord.HL_RunningCounter = 0;
-                //    playRecord.HL_TrueCounter = 0;
-                //    playRecord.RAPC_RunningCounter = 0;
-                //    playRecord.RAPC_TrueCounter = 0;
-                //}
-
-                //  Console.ReadKey();
-
                 playRecord.PlayerStake = Player.Stake.ToString();
+
+                #endregion UPDATE PLAY RECORD
+
+
                 playFile.WriteLine(playRecord);
+
+
 
             }
 
@@ -327,24 +321,24 @@ namespace BlackJackSimul
                         {
                             Player.TotalHBust++;
                             Player.TotalHLose++;
-                            Player.Stake -= playerHand.Puntata;
-                            playerHand.BetResult = -playerHand.Puntata;
+                            Player.Stake -= playerHand.Bet;
+                            playerHand.BetResult = -playerHand.Bet;
                             log.WriteLine($"Il dealer vince");
                             break;
                         }
                     case "LOSE":
                         {
                             Player.TotalHLose++;
-                            Player.Stake -= playerHand.Puntata;
-                            playerHand.BetResult = -playerHand.Puntata;
+                            Player.Stake -= playerHand.Bet;
+                            playerHand.BetResult = -playerHand.Bet;
                             log.WriteLine($"Il dealer vince");
                             break;
                         }
                     case "WIN":
                         {
                             Player.TotalHWin++;
-                            Player.Stake += playerHand.Puntata;
-                            playerHand.BetResult = playerHand.Puntata;
+                            Player.Stake += playerHand.Bet;
+                            playerHand.BetResult = playerHand.Bet;
                             log.WriteLine($"Il player vince");
                             break;
                         }
@@ -358,8 +352,8 @@ namespace BlackJackSimul
                         {
                             Player.TotalBlackJack++;
                             Player.TotalHWin++;
-                            Player.Stake += playerHand.Puntata*1.5f;
-                            playerHand.BetResult = playerHand.Puntata*1.5f;
+                            Player.Stake += playerHand.Bet*1.5f;
+                            playerHand.BetResult = playerHand.Bet*1.5f;
                             log.WriteLine($"Il player vince");
                             break;
                         }

@@ -53,7 +53,7 @@ namespace BlackJackSimul.CountingStrategy
             var RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
             RunningCounter += CalulateIncrement(cardFace);
             TrueCounter = ((float)RunningCounter / RemainingDecks);
-            UpddateSideCounters(cardFace);
+         //   UpddateSideCounters(cardFace);
         }
     }
 }

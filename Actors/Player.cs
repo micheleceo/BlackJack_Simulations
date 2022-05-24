@@ -31,7 +31,7 @@ namespace BlackJackSimul
         public static int TotalHPush = 0;
 
 
-        public override void NewHand(bool f_split = false)
+        public override void NewHand()
         {
             hands.Add(new Hand());
         }
@@ -56,7 +56,7 @@ namespace BlackJackSimul
             var response = basic.ApplyStrategy(hand,dealerFirstCard);
 
             //Correct if double down is not possible
-            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split) )
+            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_splitted) )
                 response = "HIT";
 
             return response;

@@ -52,7 +52,7 @@ namespace BlackJackSimul
         {
             bool f_BlackJack = false;
 
-            if (hand.Cards.Count == 2 && hand.punteggio.Value == 21 && !hand.f_split)
+            if (hand.Cards.Count == 2 && hand.punteggio.Value == 21 && !hand.f_splitted)
                 f_BlackJack = true;
 
             return f_BlackJack;
