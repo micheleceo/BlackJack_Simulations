@@ -23,9 +23,9 @@ namespace BlackJackSimul
             rapc_counter = new RAPC_Counter(shoe);
         }
 
-        public void UpdateSideCounters(string cardValue)
+        public void UpdateSideCounters(string cardFace)
         {
-            switch (cardValue)
+            switch (cardFace)
             {
                 case "A":
                     {
@@ -50,16 +50,16 @@ namespace BlackJackSimul
 
         }
 
-        public void UpdateMainCounters(string cardValue)
+        public void UpdateMainCounters(string cardFace)
         {
-            hl_counter.UpdateMainCounters(cardValue);
-            rapc_counter.UpdateMainCounters(cardValue);
+            hl_counter.UpdateMainCounters(cardFace);
+            rapc_counter.UpdateMainCounters(cardFace);
         }
 
-        public void UpdateAllCounters(string cardValue)
+        public void UpdateAllCounters(string cardFace)
         {
-            UpdateMainCounters(cardValue);
-            UpdateSideCounters(cardValue);
+            UpdateMainCounters(cardFace);
+            UpdateSideCounters(cardFace);
         }
     }
 }

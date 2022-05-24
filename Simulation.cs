@@ -1,5 +1,4 @@
-﻿using BlackJackSimul.CountingStrategy;
-using BlackJackSimul.Data;
+﻿using BlackJackSimul.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +10,7 @@ namespace BlackJackSimul
         FileCSV playFile;
         PlayRecord playRecord = new PlayRecord();
         static Log log = new Log();
+        bool f_OneShot = false;
         Config conf;
 
         Shoe shoe { get; set; }
@@ -39,9 +39,14 @@ namespace BlackJackSimul
             for (int nShoe = 1; nShoe <= conf.SimulationTotalShoes; nShoe++)
             {
                 shoe = new Shoe(conf.ShoeDeckTotalNumber, conf.ShoeDeckToExtractNumber, deck);
+                if(conf.ShoeTrueCounter!=0)
+                {
+                    ShoeEditor.Edit(shoe, ShoeEditor.CounterType.RAPC_Counter, conf.ShoeTrueCounter);
+                    f_OneShot = true;
+                }
                 shoe.Shuffle();
                 playRecord.ShoeID = nShoe;
-                PlayShoe(shoe);
+                PlayShoe(shoe, f_OneShot);
             }
 
             playFile.Close();
@@ -54,20 +59,15 @@ namespace BlackJackSimul
         /// Play shoe
         /// </summary>
         /// <param name="shoe"></param>
-        private void PlayShoe(Shoe shoe)
+        private void PlayShoe(Shoe shoe, bool f_OneShot=false)
         {
             //Creazione dei counter
             var countManager = new CountersManager(shoe);
-         //   var hl_counter = new HL_Counter(shoe);
-        //    var rapc_counter = new RAPC_Counter(shoe);
 
             Queue<string> cardSequence = shoe.cards;
 
             while (cardSequence.Count >= conf.ShoeDeckToExtractNumber * Costanti.N_CARTE_MAZZO)
             {
-                playRecord.PlayID++;
-                playRecord.CardSequence = "";
-
                 #region DISTRIBUZIONE INIZIALE
 
                 var player = new Player();
@@ -247,6 +247,7 @@ namespace BlackJackSimul
 
                 #region UPDATE PLAY RECORD
 
+                playRecord.PlayID++;
                 playRecord.Result = result;
                 playRecord.BetResult = bet_result;
                 playRecord.HL_RunningCounter = countManager.hl_counter.RunningCounter;
@@ -271,7 +272,8 @@ namespace BlackJackSimul
 
                 playFile.WriteLine(playRecord);
 
-
+                if (f_OneShot)
+                    break;
 
             }
 

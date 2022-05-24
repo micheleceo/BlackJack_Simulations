@@ -10,10 +10,10 @@ namespace BlackJackSimul.CountingStrategy
     {
         public RAPC_Counter(Shoe shoe) : base(shoe) { }
 
-        public override int CalulateIncrement(string cardValue)
+        public override int CalulateIncrement(string cardFace)
         {
             int increment = 0;
-            switch (cardValue)
+            switch (cardFace)
             {
                 case "A":
                     increment = -4;
@@ -52,12 +52,11 @@ namespace BlackJackSimul.CountingStrategy
 
        }
 
-
-        public override void UpdateMainCounters(string cardFace)
+        public override void UpdateTrueCounter(int runniCounter)
         {
-            var RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
-            RunningCounter += CalulateIncrement(cardFace);
-            TrueCounter = ((float)RunningCounter / (RemainingDecks*2));
+            TrueCounter = ((float)RunningCounter / (RemainingDecks * 2));
         }
+
+
     }
 }
