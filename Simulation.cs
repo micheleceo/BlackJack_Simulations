@@ -41,7 +41,7 @@ namespace BlackJackSimul
                 shoe = new Shoe(conf.ShoeDeckTotalNumber, conf.ShoeDeckToExtractNumber, deck);
                 if(conf.ShoeTrueCounter!=0)
                 {
-                    ShoeEditor.Edit(shoe, ShoeEditor.CounterType.RAPC_Counter, conf.ShoeTrueCounter);
+                    ShoeEditor.Edit(shoe, (ShoeEditor.CounterType)conf.CounterT, conf.ShoeTrueCounter);
                     f_OneShot = true;
                 }
                 shoe.Shuffle();
