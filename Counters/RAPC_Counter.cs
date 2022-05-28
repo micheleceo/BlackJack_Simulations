@@ -18,16 +18,15 @@ namespace BlackJackSimul.CountingStrategy
                 case "A":
                     increment = -4;
                     break;
-
                 case "2":
                     increment = 2;
                     break;
                 case "3":
                 case "4":
-                case "5":
+                case "6":
                     increment = 3;
                     break;
-                case "6":
+                case "5":
                     increment = 4;
                     break;
                 case "7":
@@ -54,7 +53,7 @@ namespace BlackJackSimul.CountingStrategy
 
         public override void UpdateTrueCounter()
         {
-            TrueCounter = ((float)RunningCounter / (RemainingDecks * 2));
+            TrueCounter = RunningCounter / (RemainingDecks * 2);
         }
 
         public override float CalculateBet(float defaultBet)
