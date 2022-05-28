@@ -33,9 +33,11 @@ namespace BlackJackSimul.CountingStrategy
                     increment = 2;
                     break;
                 case "8":
-                    increment = -1;
+                    increment = 0;
                     break;
                 case "9":
+                    increment = -1;
+                    break;
                 case "10":
                 case "J":
                 case "Q":
