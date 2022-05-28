@@ -23,6 +23,8 @@ namespace BlackJackSimul
 
         public int TenCounter { get; set; }
 
+        public abstract float CalculateBet(float defaultBet);
+
 
         public abstract int CalulateIncrement(string cardFace);
 
@@ -30,13 +32,14 @@ namespace BlackJackSimul
         {
             RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
             RunningCounter += CalulateIncrement(cardFace);
+            UpdateTrueCounter();
         }
 
         public void UpdateRemainigDecks()
         {
             
         }
-        public abstract void UpdateTrueCounter(int runniCounter);
+        public abstract void UpdateTrueCounter();
 
         public void UpddateSideCounters(string cardValue)
         {

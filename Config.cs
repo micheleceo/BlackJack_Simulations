@@ -22,7 +22,7 @@ namespace BlackJackSimul
         public CounterType CounterT { get; set; }
 
         public bool f_dealer_Soft17_hit { get; set; } = false;
-        public bool f_console { get; set; } = false;
+        public bool f_console { get; set; } = true;
 
 
     }

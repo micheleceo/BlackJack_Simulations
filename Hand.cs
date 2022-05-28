@@ -4,12 +4,24 @@ namespace BlackJackSimul
 {
     public class Hand
     {
+        public Hand()
+        {
+            HL_Bet = DefaultBet;
+            RAPC_Bet = DefaultBet;
+        }
+
         public List<string> Cards = new List<string> { };
         public Punteggio punteggio;
         public string Result { get; set; } = "";
 
-        public float BetResult { get; set; } = 0;
-        public float Bet { get; set; } = 1;
+        public float DefaultBetResult { get; set; } = 0;
+        public float DefaultBet { get; set; } = 1;
+
+        public float HL_BetResult { get; set; } = 0;
+        public float HL_Bet { get; set; } = 0;
+
+        public float RAPC_BetResult { get; set; } = 0;
+        public float RAPC_Bet { get; set; } = 0;
 
         public bool f_double { get; set; } = false;
 
@@ -48,7 +60,7 @@ namespace BlackJackSimul
                 punteggio.Value += value;
 
                 //Controllo del punteggio soft
-                if(value ==11)
+                if(value == 11)
                 {
                     if (punteggio.Value > 21)
                         punteggio.Value -= 10;

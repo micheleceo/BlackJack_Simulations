@@ -16,9 +16,13 @@ namespace BlackJackSimul
 
         BasicStrategyL basic = new BasicStrategyL();
 
-        public static float Stake = 0;
+        public static float DefaultStake = 0;
+        public static float HL_Stake = 0;
+        public static float RAPC_Stake = 0;
 
-        public static float TotalBet = 0;
+        public static float Default_TotalBet = 0;
+        public static float HL_TotalBet = 0;
+        public static float RAPC_TotalBet = 0;
 
         public static int TotalHands = 0;
 

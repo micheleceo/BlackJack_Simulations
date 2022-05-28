@@ -1,8 +1,8 @@
 {
   "ShoeDeckTotalNumber": 8,
   "ShoeDeckToExtractNumber": 4,
-  "SimulationTotalShoes": 100000,
-  "ShoeTrueCounter": 6,
+  "SimulationTotalShoes": 1000,
+  "ShoeTrueCounter": 0,
   "CounterType": "HL_Counter",
   "f_dealer_Soft17_hit": false,
   "f_console": false

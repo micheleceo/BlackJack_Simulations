@@ -48,9 +48,33 @@ namespace BlackJackSimul.CountingStrategy
             
        }
 
-        public override void UpdateTrueCounter(int runniCounter)
+        public override void UpdateTrueCounter()
         {
             TrueCounter = ((float)RunningCounter / RemainingDecks);
+        }
+
+        public override float CalculateBet (float defaultBet)
+        {
+            float methodBet = 0;
+
+            if (TrueCounter < 3)
+                methodBet=defaultBet;
+            else if  (TrueCounter < 4)
+                methodBet = defaultBet*2;
+            else if (TrueCounter < 5)
+                methodBet = defaultBet*3;
+            else if (TrueCounter < 6)
+                methodBet = defaultBet*4;
+            else if (TrueCounter < 7)
+                methodBet = defaultBet * 5;
+            else if (TrueCounter < 8)
+                methodBet = defaultBet * 6;
+            else if (TrueCounter < 9)
+                methodBet = defaultBet * 7;
+            else
+                methodBet= defaultBet * 8;
+
+            return methodBet;
         }
     }
 }
