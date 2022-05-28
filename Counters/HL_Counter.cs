@@ -18,7 +18,6 @@ namespace BlackJackSimul.CountingStrategy
                 case "A":
                     {
                         increment = -1;
-                        AceCounter++;
                         break;
                     }
                     
@@ -28,7 +27,6 @@ namespace BlackJackSimul.CountingStrategy
                 case "K":
                     {
                         increment = -1;
-                        TenCounter++;
                         break;
                     }
                     
@@ -50,29 +48,29 @@ namespace BlackJackSimul.CountingStrategy
 
         public override void UpdateTrueCounter()
         {
-            TrueCounter = ((float)RunningCounter / RemainingDecks);
+            TrueCounter = RunningCounter / RemainingDecks;
         }
 
-        public override float CalculateBet (float defaultBet)
+        public override float CalculateBet (float flatBet)
         {
-            float methodBet = 0;
+            float methodBet = flatBet;
 
             if (TrueCounter < 3)
-                methodBet=defaultBet;
+                methodBet=flatBet;
             else if  (TrueCounter < 4)
-                methodBet = defaultBet*2;
+                methodBet = flatBet*2;
             else if (TrueCounter < 5)
-                methodBet = defaultBet*3;
+                methodBet = flatBet*3;
             else if (TrueCounter < 6)
-                methodBet = defaultBet*4;
+                methodBet = flatBet*4;
             else if (TrueCounter < 7)
-                methodBet = defaultBet * 5;
+                methodBet = flatBet * 5;
             else if (TrueCounter < 8)
-                methodBet = defaultBet * 6;
+                methodBet = flatBet * 6;
             else if (TrueCounter < 9)
-                methodBet = defaultBet * 7;
+                methodBet = flatBet * 7;
             else
-                methodBet= defaultBet * 8;
+                methodBet= flatBet * 8;
 
             return methodBet;
         }

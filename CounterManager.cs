@@ -62,10 +62,10 @@ namespace BlackJackSimul
             UpdateSideCounters(cardFace);
         }
 
-        internal void SetBets(Hand hand)
+        internal void SetCountersBets(Hand hand)
         {
-            hand.HL_Bet = hl_counter.CalculateBet(hand.DefaultBet);
-            hand.RAPC_Bet = rapc_counter.CalculateBet(hand.DefaultBet);
+            hand.HL_Bet = hl_counter.CalculateBet(hand.FlatBet);
+            hand.RAPC_Bet = rapc_counter.CalculateBet(hand.FlatBet);
         }
     }
 }

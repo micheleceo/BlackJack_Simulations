@@ -12,11 +12,11 @@ namespace BlackJackSimul.Data
         public int PlayID { get; set; } = 0;
         public string CardSequence { get; set; }
         public string Result { get; set; }
-        public float BetResult { get; set; }
-        public float Default_PlayerStake { get; set; }
+        public float FlatBetResult { get; set; }
+        public float Flat_PlayerStake { get; set; }
         public float HL_PlayerStake { get; set; }
         public float RAPC_PlayerStake { get; set; }
-        public float DefaultTotalBet { get; set; }
+        public float BasicTotalBet { get; set; }
         public float HL_TotalBet { get; set; }
         public float RAPC_TotalBet { get; set; }
 

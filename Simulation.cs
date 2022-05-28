@@ -12,6 +12,7 @@ namespace BlackJackSimul
         static Log log = new Log();
         bool f_OneShot = false;
         Config conf;
+        StatisticData stat = new StatisticData();
 
         Shoe shoe { get; set; }
         
@@ -51,10 +52,12 @@ namespace BlackJackSimul
 
             playFile.Close();
 
-            var default_rtp = 100 + (Player.DefaultStake / playRecord.DefaultTotalBet) * 100;
+            var basic_rtp = 100 + (Player.BasicStake / playRecord.BasicTotalBet) * 100;
             var hl_rtp = 100 + (Player.HL_Stake / playRecord.HL_TotalBet) * 100;
             var rapc_rtp = 100 + (Player.RAPC_Stake / playRecord.RAPC_TotalBet) * 100;
-            Console.WriteLine($"\nDEFAULT RTP: {default_rtp}% \t HL_RTP: {hl_rtp} \t RAPC_RTP: {rapc_rtp}");
+            Console.WriteLine($"\nBASIC RTP: {basic_rtp}% \t HL_RTP: {hl_rtp}% \t RAPC_RTP: {rapc_rtp}%");
+
+
         }
         
         /// <summary>
@@ -73,8 +76,8 @@ namespace BlackJackSimul
                 #region DISTRIBUZIONE INIZIALE
 
                 var player = new Player();
-                player.NewHand();
-                countManager.SetBets(player.hands[0]);
+                player.NewHand(conf.FlatBet);
+                countManager.SetCountersBets(player.hands[0]);
                 var dealer = new Dealer();
                 dealer.NewHand();
 
@@ -137,7 +140,7 @@ namespace BlackJackSimul
                                 //Check double
                                 if (playerHand.Cards.Count == 2)
                                 {
-                                    playerHand.DefaultBet *= 2;
+                                    playerHand.FlatBet *= 2;
                                     playerHand.HL_Bet *= 2;
                                     playerHand.RAPC_Bet *= 2;
                                     playerHand.f_double = true;
@@ -151,7 +154,8 @@ namespace BlackJackSimul
                                 if (playerHand.Cards.Count == 2 && playerHand.f_coppia)
                                 {
                                     //Creo nuova mano e sposto la carta da una mano all'altra
-                                    player.NewHand();
+                                    player.NewHand(conf.FlatBet);
+                                    countManager.SetCountersBets(player.hands[1]);
                                     //Setto il flag split
                                     foreach (Hand h in player.hands)
                                         h.f_splitted = true;
@@ -176,7 +180,7 @@ namespace BlackJackSimul
                         }
 
                         Player.TotalHands++;
-                        Player.Default_TotalBet += playerHand.DefaultBet;
+                        Player.Default_TotalBet += playerHand.FlatBet;
                         Player.HL_TotalBet += playerHand.HL_Bet;
                         Player.RAPC_TotalBet += playerHand.RAPC_Bet;
                         player.WriteResult();
@@ -220,7 +224,7 @@ namespace BlackJackSimul
                 else
                 {
                     Player.TotalHands++;
-                    Player.Default_TotalBet += player.hands[0].DefaultBet;
+                    Player.Default_TotalBet += player.hands[0].FlatBet;
                     Player.HL_TotalBet += player.hands[0].HL_Bet;
                     Player.RAPC_TotalBet += player.hands[0].RAPC_Bet;
                     player.WriteResult();
@@ -246,7 +250,7 @@ namespace BlackJackSimul
                 foreach (Hand playerHand in player.hands)
                 {
                     result += playerHand.Result + " ";
-                    bet_result += playerHand.DefaultBetResult;
+                    bet_result += playerHand.FlatBetResult;
                     foreach (string card in playerHand.Cards)
                     {
                         cardSeq.Append(card + ",");
@@ -258,13 +262,13 @@ namespace BlackJackSimul
 
                 playRecord.PlayID++;
                 playRecord.Result = result;
-                playRecord.BetResult = bet_result;
+                playRecord.FlatBetResult = bet_result;
                 playRecord.HL_RunningCounter = countManager.hl_counter.RunningCounter;
                 playRecord.HL_TrueCounter = countManager.hl_counter.TrueCounter;
                 playRecord.RAPC_RunningCounter = countManager.rapc_counter.RunningCounter;
                 playRecord.RAPC_TrueCounter = countManager.rapc_counter.TrueCounter;
 
-                playRecord.DefaultTotalBet = Player.Default_TotalBet;
+                playRecord.BasicTotalBet = Player.Default_TotalBet;
                 playRecord.HL_TotalBet = Player.HL_TotalBet;
                 playRecord.RAPC_TotalBet = Player.RAPC_TotalBet;
                 playRecord.TotalHands = Player.TotalHands;
@@ -276,7 +280,7 @@ namespace BlackJackSimul
 
                 playRecord.CardSequence = cardSeq.ToString();
 
-                playRecord.Default_PlayerStake = Player.DefaultStake;
+                playRecord.Flat_PlayerStake = Player.BasicStake;
                 playRecord.HL_PlayerStake = Player.HL_Stake;
                 playRecord.RAPC_PlayerStake = Player.RAPC_Stake;
 
@@ -336,8 +340,8 @@ namespace BlackJackSimul
                         {
                             Player.TotalHBust++;
                             Player.TotalHLose++;
-                            Player.DefaultStake -= playerHand.DefaultBet;
-                            playerHand.DefaultBetResult = -playerHand.DefaultBet;
+                            Player.BasicStake -= playerHand.FlatBet;
+                            playerHand.FlatBetResult = -playerHand.FlatBet;
                             Player.HL_Stake -= playerHand.HL_Bet;
                             playerHand.HL_BetResult = -playerHand.HL_Bet;
                             Player.RAPC_Stake -= playerHand.RAPC_Bet;
@@ -348,8 +352,8 @@ namespace BlackJackSimul
                     case "LOSE":
                         {
                             Player.TotalHLose++;
-                            Player.DefaultStake -= playerHand.DefaultBet;
-                            playerHand.DefaultBetResult = -playerHand.DefaultBet;
+                            Player.BasicStake -= playerHand.FlatBet;
+                            playerHand.FlatBetResult = -playerHand.FlatBet;
                             Player.HL_Stake -= playerHand.HL_Bet;
                             playerHand.HL_BetResult = -playerHand.HL_Bet;
                             Player.RAPC_Stake -= playerHand.RAPC_Bet;
@@ -360,8 +364,8 @@ namespace BlackJackSimul
                     case "WIN":
                         {
                             Player.TotalHWin++;
-                            Player.DefaultStake += playerHand.DefaultBet;
-                            playerHand.DefaultBetResult = playerHand.DefaultBet;
+                            Player.BasicStake += playerHand.FlatBet;
+                            playerHand.FlatBetResult = playerHand.FlatBet;
                             Player.HL_Stake += playerHand.HL_Bet;
                             playerHand.HL_BetResult = playerHand.HL_Bet;
                             Player.RAPC_Stake += playerHand.RAPC_Bet;
@@ -379,8 +383,8 @@ namespace BlackJackSimul
                         {
                             Player.TotalBlackJack++;
                             Player.TotalHWin++;
-                            Player.DefaultStake += playerHand.DefaultBet*1.5f;
-                            playerHand.DefaultBetResult = playerHand.DefaultBet*1.5f;
+                            Player.BasicStake += playerHand.FlatBet*1.5f;
+                            playerHand.FlatBetResult = playerHand.FlatBet*1.5f;
                             Player.HL_Stake += playerHand.HL_Bet*1.5f;
                             playerHand.HL_BetResult = playerHand.HL_Bet * 1.5f; 
                             Player.RAPC_Stake += playerHand.RAPC_Bet * 1.5f; 
@@ -405,7 +409,7 @@ namespace BlackJackSimul
             }
             
             Console.ResetColor();
-            log.WriteLine($"Saldo Default player: {Player.DefaultStake}");
+            log.WriteLine($"Saldo Default player: {Player.BasicStake}");
             log.WriteLine($"Saldo HL player: {Player.HL_Stake}");
             log.WriteLine($"Saldo RAPC player: {Player.RAPC_Stake}");
 

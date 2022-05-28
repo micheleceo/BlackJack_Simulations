@@ -4,18 +4,19 @@ namespace BlackJackSimul
 {
     public class Hand
     {
-        public Hand()
+        public Hand(float flatBet=0)
         {
-            HL_Bet = DefaultBet;
-            RAPC_Bet = DefaultBet;
+            HL_Bet = flatBet;
+            RAPC_Bet = flatBet;
+            FlatBet = flatBet;
         }
 
         public List<string> Cards = new List<string> { };
         public Punteggio punteggio;
         public string Result { get; set; } = "";
 
-        public float DefaultBetResult { get; set; } = 0;
-        public float DefaultBet { get; set; } = 1;
+        public float FlatBetResult { get; set; } = 0;
+        public float FlatBet { get; set; } = 0;
 
         public float HL_BetResult { get; set; } = 0;
         public float HL_Bet { get; set; } = 0;

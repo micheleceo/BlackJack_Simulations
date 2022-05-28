@@ -16,7 +16,7 @@ namespace BlackJackSimul
 
         BasicStrategyL basic = new BasicStrategyL();
 
-        public static float DefaultStake = 0;
+        public static float BasicStake = 0;
         public static float HL_Stake = 0;
         public static float RAPC_Stake = 0;
 
@@ -35,9 +35,9 @@ namespace BlackJackSimul
         public static int TotalHPush = 0;
 
 
-        public override void NewHand()
+        public override void NewHand(float flatBet)
         {
-            hands.Add(new Hand());
+            hands.Add(new Hand(flatBet));
         }
 
         public string AskAction(int handID, int enemyPoint)
@@ -55,8 +55,6 @@ namespace BlackJackSimul
 
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
-            //TODO: Check double and split again
-
             var response = basic.ApplyStrategy(hand,dealerFirstCard);
 
             //Correct if double down is not possible

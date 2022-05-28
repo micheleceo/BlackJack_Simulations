@@ -12,7 +12,7 @@ namespace BlackJackSimul
        
         static public int CounterBlackJack { get; set; }
 
-        public void NewHand()
+        public void NewHand(float flatBet=0)
         {
             hand = new Hand();
         }
