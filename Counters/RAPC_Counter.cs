@@ -75,7 +75,7 @@ namespace BlackJackSimul.CountingStrategy
                 methodBet = defaultBet * 6;
             else if (TrueCounter < 4.5)
                 methodBet = defaultBet * 7;
-            else if (TrueCounter > 1.5)
+            else if (TrueCounter > 5)
                 methodBet = defaultBet * 8;
             else if (TrueCounter < 5.5)
                 methodBet = defaultBet * 9;
