@@ -71,7 +71,7 @@ namespace BlackJackSimul
 
             Queue<string> cardSequence = shoe.cards;
 
-            while (cardSequence.Count >= conf.ShoeDeckToExtractNumber * Costanti.N_CARTE_MAZZO)
+            while (cardSequence.Count >= (conf.ShoeDeckTotalNumber - conf.ShoeDeckToExtractNumber) * Costanti.N_CARTE_MAZZO)
             {
                 #region DISTRIBUZIONE INIZIALE
 
@@ -103,7 +103,7 @@ namespace BlackJackSimul
 
 
                 // Console.ForegroundColor = ConsoleColor.White;
-                if(!Costanti.f_print_hands_on_console)
+                if(!Configs.f_print_hands_on_console)
                     Console.Write($"\r Shoe {playRecord.ShoeID}");
                 log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
                 log.WriteLine($"DEALER: { dealerFirstCard}");
@@ -121,7 +121,7 @@ namespace BlackJackSimul
                         var playerHand = player.hands[playerhandID];
                         string response = "";
 
-                        if (Costanti.f_print_hands_on_console)
+                        if (Configs.f_print_hands_on_console)
                             if (playerhandID > 0)
                                 log.WriteLine("---");
                         player.WriteHandResult(playerHand);

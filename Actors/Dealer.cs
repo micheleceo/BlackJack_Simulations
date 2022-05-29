@@ -48,7 +48,7 @@ namespace BlackJackSimul
 
         public void WriteResult()
         {
-            if(Costanti.f_print_hands_on_console)
+            if(Configs.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 StringBuilder actorString = new StringBuilder();

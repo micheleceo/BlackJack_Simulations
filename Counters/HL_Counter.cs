@@ -9,27 +9,27 @@ namespace BlackJackSimul.CountingStrategy
     public class HL_Counter : ACounter
     {
        public HL_Counter(Shoe shoe) : base(shoe) { }
-
+        /// <summary>
+        /// Calculate the running count increment for the card
+        /// </summary>
+        /// <param name="cardValue"></param>
+        /// <returns>Runing count increment</returns>
        public override int CalulateIncrement(string cardValue) 
        {
             int increment = 0;
             switch (cardValue)
             {
                 case "A":
-                    {
-                        increment = -1;
-                        break;
-                    }
+                    increment = -1;
+                    break;
                     
                 case "10":
                 case "J":
                 case "Q":
                 case "K":
-                    {
-                        increment = -1;
-                        break;
-                    }
-                    
+                    increment = -1;
+                    break;
+
                 case "2":
                 case "3":
                 case "4":
@@ -37,32 +37,38 @@ namespace BlackJackSimul.CountingStrategy
                 case "6":
                     increment = 1;
                     break;
+                
                 default:
-                    // code block
                     break;
             }
 
             return increment;
             
        }
-
+        /// <summary>
+        /// Update TrueCounter
+        /// </summary>
         public override void UpdateTrueCounter()
         {
             TrueCounter = RunningCounter / RemainingDecks;
         }
-
-        public override float CalculateBet (float flatBet)
+        /// <summary>
+        /// Calculate the bet for the method
+        /// </summary>
+        /// <param name="flatBet"></param>
+        /// <returns>Method bet</returns>
+        public override float CalculateBet(float flatBet)
         {
             float methodBet = flatBet;
 
             if (TrueCounter < 3)
                 methodBet=flatBet;
             else if  (TrueCounter < 4)
-                methodBet = flatBet*2;
+                methodBet = flatBet * 2;
             else if (TrueCounter < 5)
-                methodBet = flatBet*3;
+                methodBet = flatBet * 3;
             else if (TrueCounter < 6)
-                methodBet = flatBet*4;
+                methodBet = flatBet * 4;
             else if (TrueCounter < 7)
                 methodBet = flatBet * 5;
             else if (TrueCounter < 8)

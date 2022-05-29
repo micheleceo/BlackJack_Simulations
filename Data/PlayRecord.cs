@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlackJackSimul.Data
 {
+    /// <summary>
+    /// Info data record to write in file
+    /// </summary>
     public class PlayRecord
     {
         public int ShoeID{ get; set; } = 0;
@@ -19,7 +22,6 @@ namespace BlackJackSimul.Data
         public float BasicTotalBet { get; set; }
         public float HL_TotalBet { get; set; }
         public float RAPC_TotalBet { get; set; }
-
         public int TotalHands { get; set; }
         public int TotalHWin { get; set; }
         public int TotalHLose { get; set; }

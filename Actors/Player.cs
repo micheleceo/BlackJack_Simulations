@@ -10,7 +10,7 @@ namespace BlackJackSimul
     public class Player:AActor, IActor
     {
         /// <summary>
-        /// Lista delle mani
+        /// Hand list can be two in case of split
         /// </summary>
         public List<Hand> hands = new List<Hand>();
 
@@ -40,19 +40,19 @@ namespace BlackJackSimul
             hands.Add(new Hand(flatBet));
         }
 
-        public string AskAction(int handID, int enemyPoint)
-        {
-            if (hands[handID].punteggio.Value >= 21)
-                return "STAND";
-             else
-                return ApplicaStrategiaBase(hands[handID],enemyPoint);
-        }
-
-        public override void GiveCard(string card,int handID=0)
+        public override void GiveCard(string card, int handID = 0)
         {
             hands[handID].AddCard(card);
         }
 
+        public string AskAction(int handID, int dealerFirstCard)
+        {
+            if (hands[handID].punteggio.Value >= 21)
+                return "STAND";
+             else
+                return ApplicaStrategiaBase(hands[handID],dealerFirstCard);
+        }
+      
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
             var response = basic.ApplyStrategy(hand,dealerFirstCard);
@@ -67,7 +67,7 @@ namespace BlackJackSimul
         
         public void WriteResult()
         {
-            if (Costanti.f_print_hands_on_console)
+            if (Configs.f_print_hands_on_console)
             {
                 foreach (Hand hand in hands)
                 {
@@ -87,7 +87,7 @@ namespace BlackJackSimul
 
         public void WriteHandResult(Hand hand)
         {
-            if(Costanti.f_print_hands_on_console)
+            if(Configs.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 StringBuilder actorString = new StringBuilder();

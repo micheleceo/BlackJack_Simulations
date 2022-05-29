@@ -8,14 +8,10 @@ namespace BlackJackSimul
 {
     public static class Costanti
     {
-        //Costanti caratterustiche delle carte
+        //Deck standard
         public const int N_TIPI_CARTE = 13;
         public const int N_SEMI = 4;
         public const int N_CARTE_MAZZO = N_TIPI_CARTE * N_SEMI;
-
-        //TODO: rendere configurabili
-        //Console
-        public const bool f_print_hands_on_console = false;
-     //   public const bool f_txtLog = true;
     }
+
 }

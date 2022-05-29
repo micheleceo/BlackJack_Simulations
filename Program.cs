@@ -17,6 +17,7 @@ namespace BlackJackSimul
             try
             {
                 conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
+                Configs.f_print_hands_on_console = conf.f_console;
             }
             catch
             {
@@ -27,13 +28,14 @@ namespace BlackJackSimul
 
             Simulation simulation = new Simulation(conf);
             simulation.Start();
+        }//end of main
+
+    }//end of class
 
 
-
-        }
-
-    
-
-
+    public static class Configs
+    {
+        public static bool f_print_hands_on_console;
     }
-}
+
+}// end of namepace

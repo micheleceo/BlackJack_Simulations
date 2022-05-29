@@ -11,13 +11,13 @@ namespace BlackJackSimul
     {
         public void Write(string text)
         {
-            if (Costanti.f_print_hands_on_console)
+            if (Configs.f_print_hands_on_console)
                 Console.Write(text);
         }
 
         public void WriteLine(string text)
         {
-            if (Costanti.f_print_hands_on_console)
+            if (Configs.f_print_hands_on_console)
                 Console.WriteLine(text);
         }
 

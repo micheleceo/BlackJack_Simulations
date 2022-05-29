@@ -12,7 +12,7 @@ namespace BlackJackSimul
         }
 
         public List<string> Cards = new List<string> { };
-        public Punteggio punteggio;
+        public Point punteggio;
         public string Result { get; set; } = "";
 
         public float FlatBetResult { get; set; } = 0;
@@ -41,7 +41,7 @@ namespace BlackJackSimul
         public void Analize()
         {
             //Azzero il punteggio
-            punteggio = new Punteggio();
+            punteggio = new Point();
 
             //Ordinamento carte con assi alla fine
             List<int> CardValue = new List<int>();
@@ -76,7 +76,7 @@ namespace BlackJackSimul
         }
     }
 
-    public class Punteggio
+    public class Point
     {
        public int Value { get; set; } = 0;
        public bool f_soft { get; set; } = false;
