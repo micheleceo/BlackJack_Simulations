@@ -1,7 +1,7 @@
 {
   "ShoeDeckTotalNumber": 8,
   "ShoeDeckToExtractNumber": 4,
-  "SimulationTotalShoes": 100,
+  "SimulationTotalShoes": 1000,
   "ShoeTrueCounter": 0,
   "CounterType": "RAPC_Counter",
   "FlatBet": 1,

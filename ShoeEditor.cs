@@ -54,7 +54,7 @@ namespace BlackJackSimul
                     if (index != -1)
                     {
                         shoe.temp_cards.RemoveAt(index);
-                        Console.WriteLine($"Removed {cardFace} \t TrueCounter = {trueCounter}");
+                       // Console.WriteLine($"Removed {cardFace} \t TrueCounter = {trueCounter}");
                     }
                     else
                         Console.WriteLine($"Carta {cardFace} non trovata");
