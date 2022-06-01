@@ -19,7 +19,6 @@ namespace BlackJackSimul
 
         public class Memory
         {
-          
             public List<float> HL_TrueCountersequence = new List<float>();
             public List<float> RAPC_TrueCounterSequence = new List<float>();
         }

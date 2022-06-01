@@ -52,7 +52,7 @@ namespace BlackJackSimul
 
             playFile.Close();
 
-            var basic_rtp = 100 + (Player.BasicStake / playRecord.BasicTotalBet) * 100;
+            var basic_rtp = 100 + (Player.BasicStake / playRecord.Flat_TotalBet) * 100;
             var hl_rtp = 100 + (Player.HL_Stake / playRecord.HL_TotalBet) * 100;
             var rapc_rtp = 100 + (Player.RAPC_Stake / playRecord.RAPC_TotalBet) * 100;
             Console.WriteLine($"\nBASIC RTP: {basic_rtp}% \t HL_RTP: {hl_rtp}% \t RAPC_RTP: {rapc_rtp}%");
@@ -262,13 +262,13 @@ namespace BlackJackSimul
 
                 playRecord.PlayID++;
                 playRecord.Result = result;
-                playRecord.FlatBetResult = bet_result;
+                playRecord.Flat_BetResult = bet_result;
                 playRecord.HL_RunningCounter = countManager.hl_counter.RunningCounter;
                 playRecord.HL_TrueCounter = countManager.hl_counter.TrueCounter;
                 playRecord.RAPC_RunningCounter = countManager.rapc_counter.RunningCounter;
                 playRecord.RAPC_TrueCounter = countManager.rapc_counter.TrueCounter;
 
-                playRecord.BasicTotalBet = Player.Default_TotalBet;
+                playRecord.Flat_TotalBet = Player.Default_TotalBet;
                 playRecord.HL_TotalBet = Player.HL_TotalBet;
                 playRecord.RAPC_TotalBet = Player.RAPC_TotalBet;
                 playRecord.TotalHands = Player.TotalHands;
