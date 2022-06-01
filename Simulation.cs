@@ -170,7 +170,7 @@ namespace BlackJackSimul
                                 }
                             }
 
-                            if (conf.f_console)
+                            if (conf.f_print_hands_on_console)
                             {
                                 log.WriteLine(response);
                                 if (response == "SPLIT")

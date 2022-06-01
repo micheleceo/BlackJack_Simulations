@@ -17,7 +17,7 @@ namespace BlackJackSimul
             try
             {
                 conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
-                Configs.f_print_hands_on_console = conf.f_console;
+                Configs.f_print_hands_on_console = conf.f_print_hands_on_console;
             }
             catch
             {
