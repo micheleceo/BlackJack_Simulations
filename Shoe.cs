@@ -12,17 +12,56 @@ namespace BlackJackSimul
     public class Shoe
     {
         /// <summary>
-        /// Numero di mazzi di cui è composto lo shoe
+        /// Remaining decks number in the shoe
         /// </summary>
-      //  private int TotDeckNumber { get; }
+        public float RemainingDecks
+        {
+            get
+            {
+                return RemaningCards / (float)Costanti.N_CARTE_MAZZO;
+            }
+        }
         /// <summary>
-        /// Numero di carte totali
+        /// Remaining cards number in the shoe
         /// </summary>
-     //   public int TotCardNumber { get; }
+        private int RemaningCards
+        {
+            get
+            {
+                return cards.Count;
+            }
+        }
+
+        /// <summary>
+        /// Temporary remaining decks number in the shoe
+        /// </summary>
+        public float Temp_RemainingDecks
+        {
+            get
+            {
+                return Temp_RemaningCards / (float)Costanti.N_CARTE_MAZZO;
+            }
+        }
+
+        /// <summary>
+        /// Temporary remaining cards number in the shoe
+        private int Temp_RemaningCards
+        {
+            get
+            {
+                return temp_cards.Count;
+            }
+        }
 
         private Random rand = new Random();
 
-        public List<string> temp_cards = new List<string>();
+        /// <summary>
+        /// Temporary list of sorted cards
+        /// </summary>
+        private List<string> temp_cards = new List<string>();
+        /// <summary>
+        /// Cards queue of the shuffled shoes
+        /// </summary>
         public Queue<string> cards = new Queue<string>();
 
         /// <summary>
@@ -32,9 +71,6 @@ namespace BlackJackSimul
         /// <param name="deckToUse"></param>
         public Shoe(int totDeckNumber, int totdeckNumberToUse, List<string> deck)
         {
-           // TotDeckNumber = totDeckNumber;
-           // TotCardNumber = TotDeckNumber * Costanti.N_CARTE_MAZZO;
-
             temp_cards = new List<string>();
            
             for (int k = 1; k <= totDeckNumber; k++)
@@ -78,6 +114,21 @@ namespace BlackJackSimul
             cards.TryDequeue(out var card);
             return card;
         }
+
+        #region TempCards
+        public int TempCard_GetIndex(string cardFace)
+        {
+            return temp_cards.IndexOf(cardFace);
+        }
+
+
+        public void TempCard_Remove(int index)
+        {
+            temp_cards.RemoveAt(index);
+        }
+
+        #endregion TempCard
+
 
     }
 }

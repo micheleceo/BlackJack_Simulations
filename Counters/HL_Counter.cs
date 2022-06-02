@@ -9,11 +9,12 @@ namespace BlackJackSimul.CountingStrategy
     public class HL_Counter : ACounter
     {
        public HL_Counter(Shoe shoe) : base(shoe) { }
+       
         /// <summary>
-        /// Calculate the running count increment for the card
-        /// </summary>
-        /// <param name="cardValue"></param>
-        /// <returns>Runing count increment</returns>
+       /// Calculate the running count increment for the card
+       /// </summary>
+       /// <param name="cardValue"></param>
+       /// <returns>HL Running count increment</returns>
        public override int CalulateIncrement(string cardValue) 
        {
             int increment = 0;
@@ -45,13 +46,15 @@ namespace BlackJackSimul.CountingStrategy
             return increment;
             
        }
-        /// <summary>
-        /// Update TrueCounter
-        /// </summary>
-        public override void UpdateTrueCounter()
-        {
-            TrueCounter = RunningCounter / RemainingDecks;
-        }
+        
+       /// <summary>
+       /// HL True Counter
+       /// </summary>
+       public override float TrueCounter
+       {
+           get { return RunningCounter / Shoe.RemainingDecks; }
+       }
+
         /// <summary>
         /// Calculate the bet for the method
         /// </summary>

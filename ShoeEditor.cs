@@ -21,7 +21,7 @@ namespace BlackJackSimul
             var countManager = new CountersManager(shoe);
             string cardFace="";
             float trueIncrement = 0;
-            var trueCounter = 0f;
+            float trueCounter = 0;
 
             while (Math.Abs(trueCounter - targetTrueCounter) > 0.1f)
             {
@@ -30,15 +30,13 @@ namespace BlackJackSimul
                     case CounterType.HL_Counter:
                         {
                             cardFace = rand.Next(2, 6+1).ToString();
-                            trueIncrement = countManager.hl_counter.CalulateIncrement(cardFace)/
-                                ((float)shoe.temp_cards.Count / (float)Costanti.N_CARTE_MAZZO);
+                            trueIncrement = countManager.hl_counter.CalulateIncrement(cardFace)/shoe.Temp_RemainingDecks;
                             break;
                         }
                     case CounterType.RAPC_Counter:
                         {
                             cardFace = rand.Next(2, 7+1).ToString();
-                            trueIncrement = countManager.hl_counter.CalulateIncrement(cardFace)/
-                                ((float)shoe.temp_cards.Count / (float)Costanti.N_CARTE_MAZZO *2);
+                            trueIncrement = countManager.hl_counter.CalulateIncrement(cardFace)/(shoe.Temp_RemainingDecks * 2);
                             break;
                         }
 
@@ -47,14 +45,14 @@ namespace BlackJackSimul
                         break;
                 }
 
-                if (trueCounter + trueIncrement <= targetTrueCounter + 0.1f)
+                if (trueCounter + trueIncrement <= targetTrueCounter + 0.2f)
                 {
                     trueCounter += trueIncrement;
-                    var index = shoe.temp_cards.IndexOf(cardFace);
-                    if (index != -1)
+                    var index = shoe.TempCard_GetIndex(cardFace);
+                    if (shoe.TempCard_GetIndex(cardFace) != -1)
                     {
-                        shoe.temp_cards.RemoveAt(index);
-                       // Console.WriteLine($"Removed {cardFace} \t TrueCounter = {trueCounter}");
+                        shoe.TempCard_Remove(index);
+                        Console.WriteLine($"Removed {cardFace} \t TrueCounter = {trueCounter}");
                     }
                     else
                         Console.WriteLine($"Carta {cardFace} non trovata");

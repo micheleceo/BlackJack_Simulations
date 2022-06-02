@@ -1,10 +1,10 @@
 {
   "ShoeDeckTotalNumber": 8,
   "ShoeDeckToExtractNumber": 4,
-  "SimulationTotalShoes": 1000,
-  "ShoeTrueCounter": 0,
+  "SimulationTotalShoes": 10,
+  "ShoeTrueCounter": 8,
   "CounterType": "RAPC_Counter",
-  "FlatBet": 10,
+  "FlatBet": 1,
   "f_dealer_Soft17_hit": false,
   "f_print_hands_on_console": false
 }

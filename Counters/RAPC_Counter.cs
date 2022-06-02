@@ -9,11 +9,12 @@ namespace BlackJackSimul.CountingStrategy
     public class RAPC_Counter: ACounter
     {
         public RAPC_Counter(Shoe shoe) : base(shoe) { }
+
         /// <summary>
         /// Calculate running count increment for the card in the counting method
         /// </summary>
         /// <param name="cardFace"></param>
-        /// <returns>Running counter increment</returns>
+        /// <returns>RAPC Running counter increment</returns>
         public override int CalulateIncrement(string cardFace)
         {
             int increment = 0;
@@ -57,12 +58,13 @@ namespace BlackJackSimul.CountingStrategy
 
        }
         /// <summary>
-        /// Update TrueCounter for the method
+        /// RAPC True Counter
         /// </summary>
-        public override void UpdateTrueCounter()
+        public override float TrueCounter
         {
-            TrueCounter = RunningCounter / (RemainingDecks * 2);
+            get { return RunningCounter / (Shoe.RemainingDecks*2); }
         }
+
         /// <summary>
         /// Calcula the bet modification for the moethoddd
         /// </summary>

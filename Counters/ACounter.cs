@@ -8,47 +8,52 @@ namespace BlackJackSimul
 {
     public abstract class ACounter
     {
-        public Shoe _shoe { get; set; }
+        public Shoe Shoe { get; set; }
         public ACounter(Shoe shoe)
         {
-            _shoe = shoe;
+            Shoe = shoe;
         }
 
+        /// <summary>
+        /// Running Counter
+        /// </summary>
         public int RunningCounter { get; set; }
-
-        public float TrueCounter { get; set; }
-
-        public float RemainingDecks { get; set; }
-       
+        /// <summary>
+        /// True Counter
+        /// </summary>
+        abstract public float TrueCounter { get;}
+        /// <summary>
+        /// Ace Counter
+        /// </summary>
         public int AceCounter { get; set; }
-
+        /// <summary>
+        /// Ten Counter
+        /// </summary>
         public int TenCounter { get; set; }
+
         /// <summary>
         /// Calculate bet for the counter method
         /// </summary>
         /// <param name="flatBet"></param>
         /// <returns></returns>
         public abstract float CalculateBet(float flatBet);
+
         /// <summary>
         /// Calculate increment for the counter method
         /// </summary>
         /// <param name="cardFace"></param>
         /// <returns></returns>
         public abstract int CalulateIncrement(string cardFace);
+
         /// <summary>
-        /// Update RunningCount and Truecounter
+        /// Update Running Count
         /// </summary>
         /// <param name="cardFace"></param>
-        public void UpdateMainCounters(string cardFace)
+        public void UpdateCounters(string cardFace)
         {
-            RemainingDecks = (float)_shoe.cards.Count / (float)Costanti.N_CARTE_MAZZO;
             RunningCounter += CalulateIncrement(cardFace);
-            UpdateTrueCounter();
         }
-        /// <summary>
-        /// Update TrueCounter
-        /// </summary>
-        public abstract void UpdateTrueCounter();
+      
         /// <summary>
         /// Update SideCounters
         /// </summary>
