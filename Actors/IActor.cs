@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     public interface IActor
     {
@@ -13,7 +13,7 @@ namespace BlackJack
         /// Creazione nuova mano
         /// </summary>
         /// <param name="f_split">In caso di split segna il flag</param>
-        public void NewHand(bool f_split = false);
+        public void NewHand(float flatBet=0);
 
 
         /// <summary>

@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack.StrategiesTables
+namespace BlackJackSimul.StrategiesTables
 {
     public class BasicStrategyL_Table
     {
         //basic strategy table in two dimensional array
         public string[,] Response = new string[32, 10];
-
-     
 
         public BasicStrategyL_Table()
         {
@@ -334,7 +332,7 @@ namespace BlackJack.StrategiesTables
             Response[26, 3] = "SPLIT";
             Response[26, 4] = "SPLIT";
             Response[26, 5] = "SPLIT";
-            Response[26, 6] = "SPLIT";
+            Response[26, 6] = "HIT";
             Response[26, 7] = "HIT";
             Response[26, 8] = "HIT";
             Response[26, 9] = "HIT";
@@ -345,21 +343,21 @@ namespace BlackJack.StrategiesTables
             Response[27, 2] = "SPLIT";
             Response[27, 3] = "SPLIT";
             Response[27, 4] = "SPLIT";
-            Response[27, 5] = "SPLIT";
+            Response[27, 5] = "HIT";
             Response[27, 6] = "HIT";
             Response[27, 7] = "HIT";
             Response[27, 8] = "HIT";
             Response[27, 9] = "HIT";
 
             //Coppia5
-            Response[28, 0] = "SPLIT";
-            Response[28, 1] = "SPLIT";
-            Response[28, 2] = "SPLIT";
-            Response[28, 3] = "SPLIT";
-            Response[28, 4] = "SPLIT";
-            Response[28, 5] = "SPLIT";
-            Response[28, 6] = "SPLIT";
-            Response[28, 7] = "SPLIT";
+            Response[28, 0] = "DOUBLE DOWN";
+            Response[28, 2] = "DOUBLE DOWN";
+            Response[28, 3] = "DOUBLE DOWN";
+            Response[28, 4] = "DOUBLE DOWN";
+            Response[28, 1] = "DOUBLE DOWN";
+            Response[28, 5] = "DOUBLE DOWN";
+            Response[28, 6] = "DOUBLE DOWN";
+            Response[28, 7] = "DOUBLE DOWN";
             Response[28, 8] = "HIT";
             Response[28, 9] = "HIT";
 

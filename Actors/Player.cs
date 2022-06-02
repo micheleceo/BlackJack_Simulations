@@ -5,63 +5,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     public class Player:AActor, IActor
     {
         /// <summary>
-        /// Lista delle mani
+        /// Hand list can be two in case of split
         /// </summary>
         public List<Hand> hands = new List<Hand>();
 
-      
+        BasicStrategyL basic = new BasicStrategyL();
 
-        public static float TotVincita = 0;
+        public static float BasicStake = 0;
+        public static float HL_Stake = 0;
+        public static float RAPC_Stake = 0;
+
+        public static float Default_TotalBet = 0;
+        public static float HL_TotalBet = 0;
+        public static float RAPC_TotalBet = 0;
+
+        public static int TotalHands = 0;
+
+        public static int TotalHWin = 0;
+
+        public static int TotalHLose = 0;
+
+        public static int TotalHBust = 0;
+
+        public static int TotalHPush = 0;
 
 
-        public override void NewHand(bool f_split = false)
+        public override void NewHand(float flatBet)
         {
-            hands.Add(new Hand());
+            hands.Add(new Hand(flatBet));
         }
 
-        public string Ask(int handID, int enemyPoint)
-        {
-            if (hands[handID].punteggio.Value >= 21)
-                return "STAND";
-             else
-                return ApplicaStrategiaBase(hands[handID],enemyPoint);
-        }
-
-        public override void GiveCard(string card,int handID=0)
+        public override void GiveCard(string card, int handID = 0)
         {
             hands[handID].AddCard(card);
         }
 
+        public string AskAction(int handID, int dealerFirstCard)
+        {
+            if (hands[handID].punteggio.Value >= 21)
+                return "STAND";
+             else
+                return ApplicaStrategiaBase(hands[handID],dealerFirstCard);
+        }
+      
         string ApplicaStrategiaBase(Hand hand,int dealerFirstCard)
         {
-            string response = "";
-            BasicStrategyL basic = new BasicStrategyL();
+            var response = basic.ApplyStrategy(hand,dealerFirstCard);
 
-            response = basic.ApplyStrategy(hand,dealerFirstCard);
-
-            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_split))
+            //Correct if double down is not possible
+            if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_splitted) )
                 response = "HIT";
-
-            return response;
-        }
-
-
-        string ApplicaStrategiaDummy()
-        {
-            string response = "";
-
-            //Strategia base
-            if (hands[0].punteggio.Value <= 16)
-                response = "HIT";
-            else if (hands[0].punteggio.Value >= 17 && hands[0].punteggio.Value <= 21)
-                response = "STAND";
-            else
-                response = "SBALLATO";
 
             return response;
         }
@@ -69,24 +67,27 @@ namespace BlackJack
         
         public void WriteResult()
         {
-            foreach (Hand hand in hands)
+            if (Configs.f_print_hands_on_console)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                StringBuilder actorString = new StringBuilder();
-                actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
-                actorString.Append(string.Join(", ", hand.Cards));
-                actorString.Append(" --> " + hand.punteggio.Value);
-                if (hand.punteggio.Value > 21)
-                    actorString.Append(" : SBALLATO");
-                else if (Util.CheckBlackJack(hand))
-                    actorString.Append(" : BLACKJACK");
-                Console.WriteLine(actorString);
+                foreach (Hand hand in hands)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    StringBuilder actorString = new StringBuilder();
+                    actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
+                    actorString.Append(string.Join(", ", hand.Cards));
+                    actorString.Append(" --> " + hand.punteggio.Value);
+                    if (hand.punteggio.Value > 21)
+                        actorString.Append(" : SBALLATO");
+                    else if (Util.CheckBlackJack(hand))
+                        actorString.Append(" : BLACKJACK");
+                    Console.WriteLine(actorString);
+                }
             }
         }
 
         public void WriteHandResult(Hand hand)
         {
-            if(Costanti.f_console)
+            if(Configs.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 StringBuilder actorString = new StringBuilder();

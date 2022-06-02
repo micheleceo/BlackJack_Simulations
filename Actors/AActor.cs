@@ -4,28 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     public abstract class AActor : IActor
     {
-        /// <summary>
-        /// Mani vinte
-        /// </summary>
-        static public int ManiVinte { get; set; }
-        /// <summary>
-        /// Mani pareggiate
-        /// </summary>
-        static public int ManiPareggiate { get; set; }
-        /// <summary>
-        /// Contatore di blackjack
-        /// </summary>
-        static public int CounterBlackJack { get; set; }
+        static public int TotalBlackJack { get; set; }
 
         /// <summary>
         /// Creazione nuova mano
         /// </summary>
         /// <param name="f_split">In caso di split segna il flag</param>
-        public abstract void NewHand(bool f_split = false);
+        public abstract void NewHand(float flatBet=0);
 
 
         /// <summary>

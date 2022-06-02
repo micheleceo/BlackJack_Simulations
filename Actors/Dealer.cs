@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     class Dealer : IActor
     {
@@ -15,7 +12,7 @@ namespace BlackJack
        
         static public int CounterBlackJack { get; set; }
 
-        public void NewHand(bool f_split = false)
+        public void NewHand(float flatBet=0)
         {
             hand = new Hand();
         }
@@ -25,7 +22,7 @@ namespace BlackJack
             hand.AddCard(card);
         }
 
-        public string ApplicaRegole()
+        public string ApplyRules(Config conf)
         {
             var punteggio = hand.punteggio.Value;
             string response = "";
@@ -34,17 +31,24 @@ namespace BlackJack
 
             if (punteggio <= 16)
                 response = "HIT";
-            else if (punteggio >= 17 && punteggio < 21)
+            else if(punteggio ==17)
+            {
+                if(hand.punteggio.f_soft && conf.f_dealer_Soft17_hit)
+                    response = "HIT";
+                else
+                    response = "STAND";
+            }
+            else if (punteggio >=18 && punteggio <= 21)
                 response = "STAND";
             else
-                response = "AFFANGUL";
+                response = "BUST";
 
             return response;
         }
 
         public void WriteResult()
         {
-            if(Costanti.f_console)
+            if(Configs.f_print_hands_on_console)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 StringBuilder actorString = new StringBuilder();

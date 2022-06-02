@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     /// <summary>
     /// Classe utiliy che permette di scrivere un file .csv a partire da una classe generica
@@ -44,20 +44,18 @@ namespace BlackJack
 
             string header = String.Join(separator, fields.Select(f => f.Name).ToArray());
 
-         //   StringBuilder csvdata = new StringBuilder();
-       //     csvdata.AppendLine(header);
-
-            /* foreach (var o in objectlist)
-                 csvdata.AppendLine(ToCsvFields(separator, fields, o));*/
-
             filecsv.WriteLine(header);
 
             return header;
         }
-
-        public string WriteData(object o)
+        /// <summary>
+        /// Write CSV line
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public string WriteLine(object o)
         {
-            StringBuilder linie = new StringBuilder();
+            StringBuilder line = new StringBuilder();
 
             foreach (var f in fields)
             {
@@ -67,11 +65,11 @@ namespace BlackJack
                 var x = f.GetValue(o);
 
                 if (x != null)
-                    linie.Append(x.ToString()+Separator);
+                    line.Append(x.ToString()+Separator);
             }
 
-            filecsv.WriteLine(linie);
-            return linie.ToString();
+            filecsv.WriteLine(line);
+            return line.ToString();
         }
     
 

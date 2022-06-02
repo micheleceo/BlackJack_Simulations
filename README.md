@@ -1,3 +1,3 @@
-# BlackJack_Simulations
+# BlackJack Simulations
 
-Only tests, stil not working
+Only tests, still not working

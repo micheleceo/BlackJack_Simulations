@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlackJack
+namespace BlackJackSimul
 {
     public class StatisticData
     {
@@ -19,7 +19,6 @@ namespace BlackJack
 
         public class Memory
         {
-          
             public List<float> HL_TrueCountersequence = new List<float>();
             public List<float> RAPC_TrueCounterSequence = new List<float>();
         }
