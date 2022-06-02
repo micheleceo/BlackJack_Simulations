@@ -19,6 +19,11 @@ namespace BlackJackSimul
         public float FlatBet { get; set; }
         public bool f_dealer_Soft17_hit { get; set; } = false;
         public bool f_print_hands_on_console { get; set; } = true;
+
+        public Config Clone()
+        {
+            return (Config)MemberwiseClone();
+        }
     }
 
 }

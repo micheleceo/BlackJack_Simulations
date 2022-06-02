@@ -14,6 +14,7 @@ namespace BlackJackSimul
         static void Main(string[] args)
         {
             Config conf = new Config();
+            
             try
             {
                 conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
@@ -23,10 +24,10 @@ namespace BlackJackSimul
             {
                 Console.WriteLine("Configuration.json file not found");
             }
-           
+
             //    File.WriteAllText("Configuration.json", JsonConvert.SerializeObject(conf, Formatting.Indented));
 
-            Simulation simulation = new Simulation(conf);
+            Simulation simulation = new Simulation(conf.Clone());
             simulation.Start();
         }//end of main
 
