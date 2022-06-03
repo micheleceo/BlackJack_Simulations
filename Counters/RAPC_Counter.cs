@@ -50,7 +50,6 @@ namespace BlackJackSimul.CountingStrategy
                     increment = -3;
                     break;
                 default:
-                    // code block
                     break;
             }
 
@@ -73,6 +72,7 @@ namespace BlackJackSimul.CountingStrategy
         public override float CalculateBet(float defaultBet)
         {
             float methodBet = defaultBet;
+
             if (TrueCounter < 1.5)
                 methodBet = defaultBet;
             else if (TrueCounter < 2)
@@ -111,5 +111,5 @@ namespace BlackJackSimul.CountingStrategy
             return methodBet;
         }
 
-    }
-}
+    }//end of Class
+}//end of namespace

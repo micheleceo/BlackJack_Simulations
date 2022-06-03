@@ -9,6 +9,7 @@ namespace BlackJackSimul
     public abstract class ACounter
     {
         public Shoe Shoe { get; set; }
+
         public ACounter(Shoe shoe)
         {
             Shoe = shoe;
@@ -18,18 +19,11 @@ namespace BlackJackSimul
         /// Running Counter
         /// </summary>
         public int RunningCounter { get; set; }
+
         /// <summary>
         /// True Counter
         /// </summary>
         abstract public float TrueCounter { get;}
-        /// <summary>
-        /// Ace Counter
-        /// </summary>
-        public int AceCounter { get; set; }
-        /// <summary>
-        /// Ten Counter
-        /// </summary>
-        public int TenCounter { get; set; }
 
         /// <summary>
         /// Calculate bet for the counter method
@@ -54,36 +48,7 @@ namespace BlackJackSimul
             RunningCounter += CalulateIncrement(cardFace);
         }
       
-        /// <summary>
-        /// Update SideCounters
-        /// </summary>
-        /// <param name="cardValue"></param>
-        public void UpdateSideCounters(string cardValue)
-        {
-            switch (cardValue)
-            {
-                case "A":
-                    {
-                        AceCounter++;
-                        break;
-                    }
+       
 
-                case "10":
-                case "J":
-                case "Q":
-                case "K":
-                    {
-                        TenCounter++;
-                        break;
-                    }
-
-            
-                default:
-                    // code block
-                    break;
-            }
-
-        }
-
-    }
-}
+    }// end of Class
+}// end of namespace

@@ -5,7 +5,7 @@ using static BlackJackSimul.ShoeEditor;
 namespace BlackJackSimul
 {
     /// <summary>
-    /// Configuration read from Configuration.json
+    /// Configuration parameters read from Configuration.json
     /// </summary>
     public class Config
     {
@@ -24,6 +24,7 @@ namespace BlackJackSimul
         {
             return (Config)MemberwiseClone();
         }
-    }
 
-}
+    }//end of Class
+
+}//end of namespace

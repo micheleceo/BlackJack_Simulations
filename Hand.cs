@@ -11,7 +11,7 @@ namespace BlackJackSimul
             FlatBet = flatBet;
         }
 
-        public List<string> Cards = new List<string> { };
+        public List<string> Cards = new() { };
         public Point punteggio;
         public string Result { get; set; } = "";
 
@@ -44,7 +44,7 @@ namespace BlackJackSimul
             punteggio = new Point();
 
             //Ordinamento carte con assi alla fine
-            List<int> CardValue = new List<int>();
+            List<int> CardValue = new();
             foreach(string card in Cards)
                 CardValue.Add(Util.PointOf(card));
             CardValue.Sort();

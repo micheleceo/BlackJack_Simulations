@@ -18,7 +18,7 @@ namespace BlackJackSimul
         {
             get
             {
-                return RemaningCards / (float)Costanti.N_CARTE_MAZZO;
+                return RemaningCards / (float)CardDeck.CARD_NUMBER;
             }
         }
         /// <summary>
@@ -39,7 +39,7 @@ namespace BlackJackSimul
         {
             get
             {
-                return Temp_RemaningCards / (float)Costanti.N_CARTE_MAZZO;
+                return Temp_RemaningCards / (float)CardDeck.CARD_NUMBER;
             }
         }
 
@@ -53,16 +53,16 @@ namespace BlackJackSimul
             }
         }
 
-        private Random rand = new Random();
+        private readonly Random rand = new();
 
         /// <summary>
         /// Temporary list of sorted cards
         /// </summary>
-        private List<string> temp_cards = new List<string>();
+        private readonly List<string> temp_cards = new();
         /// <summary>
         /// Cards queue of the shuffled shoes
         /// </summary>
-        public Queue<string> cards = new Queue<string>();
+        public Queue<string> cards = new();
 
         /// <summary>
         /// Inizializzazione del session deck

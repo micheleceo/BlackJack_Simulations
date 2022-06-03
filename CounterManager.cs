@@ -54,12 +54,9 @@ namespace BlackJackSimul
                         break;
                     }
 
-
                 default:
-                    // code block
                     break;
             }
-
         }
 
         internal void SetCountersBets(Hand hand)
@@ -67,5 +64,6 @@ namespace BlackJackSimul
             hand.HL_Bet = hl_counter.CalculateBet(hand.FlatBet);
             hand.RAPC_Bet = rapc_counter.CalculateBet(hand.FlatBet);
         }
-    }
-}
+
+    }//end of class
+}//end of namespace

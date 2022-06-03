@@ -8,11 +8,10 @@ namespace BlackJackSimul
     public class Simulation
     {
         FileCSV playFile;
-        PlayRecord playRecord = new PlayRecord();
-        static Log log = new Log();
+        PlayRecord playRecord = new();
         bool f_OneShot = false;
         Config conf;
-        StatisticData stat = new StatisticData();
+        StatisticData stat = new();
 
         Shoe shoe { get; set; }
         
@@ -71,7 +70,7 @@ namespace BlackJackSimul
 
             Queue<string> cardSequence = shoe.cards;
 
-            while (cardSequence.Count >= (conf.ShoeDeckTotalNumber - conf.ShoeDeckToExtractNumber) * Costanti.N_CARTE_MAZZO)
+            while (cardSequence.Count >= (conf.ShoeDeckTotalNumber - conf.ShoeDeckToExtractNumber) * CardDeck.CARD_NUMBER)
             {
                 #region DISTRIBUZIONE INIZIALE
 
@@ -105,8 +104,8 @@ namespace BlackJackSimul
                 // Console.ForegroundColor = ConsoleColor.White;
                 if(!Configs.f_print_hands_on_console)
                     Console.Write($"\r Shoe {playRecord.ShoeID}");
-                log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
-                log.WriteLine($"DEALER: { dealerFirstCard}");
+                Log.Write($"\nShoe {playRecord.ShoeID} \t Mano {playRecord.PlayID} \t");
+                Log.WriteLine($"DEALER: { dealerFirstCard}");
 
 
                 //Giocate
@@ -123,7 +122,7 @@ namespace BlackJackSimul
 
                         if (Configs.f_print_hands_on_console)
                             if (playerhandID > 0)
-                                log.WriteLine("---");
+                                Log.WriteLine("---");
                         player.WriteHandResult(playerHand);
 
                         while (!playerHand.f_bust &&
@@ -172,9 +171,9 @@ namespace BlackJackSimul
 
                             if (conf.f_print_hands_on_console)
                             {
-                                log.WriteLine(response);
+                                Log.WriteLine(response);
                                 if (response == "SPLIT")
-                                    log.WriteLine("---");
+                                    Log.WriteLine("---");
                             }
 
                         }
@@ -199,7 +198,6 @@ namespace BlackJackSimul
                             countBlackJack++;
                     }
 
-
                     string dealerAction = "";
                     if (countBlackJack != player.hands.Count)
                         while (dealer.hand.punteggio.Value < 21 &&
@@ -208,7 +206,7 @@ namespace BlackJackSimul
                         {
                             dealer.WriteResult();
                             dealerAction = dealer.ApplyRules(conf);
-                            log.WriteLine(dealerAction);
+                            Log.WriteLine(dealerAction);
                             if (dealerAction == "HIT")
                                 dealer.GiveCard(cardSequence.Dequeue());
 
@@ -234,7 +232,7 @@ namespace BlackJackSimul
                 //Check the results for the play
                 CheckTheWinner(player, dealer);
 
-                StringBuilder cardSeq = new StringBuilder();
+                StringBuilder cardSeq = new();
                 cardSeq.Append("D:");
 
                 foreach (string card in dealer.hand.Cards)
@@ -246,7 +244,7 @@ namespace BlackJackSimul
                 cardSeq.Append("  P:");
 
                 var result = "";
-                var bet_result = 0f;
+                float bet_result = 0;
                 foreach (Hand playerHand in player.hands)
                 {
                     result += playerHand.Result + " ";
@@ -277,7 +275,6 @@ namespace BlackJackSimul
                 playRecord.TotalHPush = Player.TotalHPush;
                 playRecord.TotalBlackJack = Player.TotalBlackJack;
 
-
                 playRecord.CardSequence = cardSeq.ToString();
 
                 playRecord.Flat_PlayerStake = Player.BasicStake;
@@ -293,7 +290,6 @@ namespace BlackJackSimul
                     break;
 
             }
-
            
         }
 
@@ -346,7 +342,7 @@ namespace BlackJackSimul
                             playerHand.HL_BetResult = -playerHand.HL_Bet;
                             Player.RAPC_Stake -= playerHand.RAPC_Bet;
                             playerHand.RAPC_BetResult = -playerHand.RAPC_Bet;
-                            log.WriteLine($"Il dealer vince");
+                            Log.WriteLine($"Il dealer vince");
                             break;
                         }
                     case "LOSE":
@@ -358,7 +354,7 @@ namespace BlackJackSimul
                             playerHand.HL_BetResult = -playerHand.HL_Bet;
                             Player.RAPC_Stake -= playerHand.RAPC_Bet;
                             playerHand.RAPC_BetResult = -playerHand.RAPC_Bet;
-                            log.WriteLine($"Il dealer vince");
+                            Log.WriteLine($"Il dealer vince");
                             break;
                         }
                     case "WIN":
@@ -370,13 +366,13 @@ namespace BlackJackSimul
                             playerHand.HL_BetResult = playerHand.HL_Bet;
                             Player.RAPC_Stake += playerHand.RAPC_Bet;
                             playerHand.RAPC_BetResult = playerHand.RAPC_Bet;
-                            log.WriteLine($"Il player vince");
+                            Log.WriteLine($"Il player vince");
                             break;
                         }
                     case "PUSH":
                         {
                             Player.TotalHPush++;
-                            log.WriteLine($"Push");
+                            Log.WriteLine($"Push");
                             break;
                         }
                     case "WIN_BJ":
@@ -389,14 +385,14 @@ namespace BlackJackSimul
                             playerHand.HL_BetResult = playerHand.HL_Bet * 1.5f; 
                             Player.RAPC_Stake += playerHand.RAPC_Bet * 1.5f; 
                             playerHand.RAPC_BetResult = playerHand.RAPC_Bet * 1.5f; 
-                            log.WriteLine($"Il player vince");
+                            Log.WriteLine($"Il player vince");
                             break;
                         }
                     case "PUSH_BJ":
                         {
                             Player.TotalBlackJack++;
                             Player.TotalHPush++;
-                            log.WriteLine($"Push");
+                            Log.WriteLine($"Push");
                             break;
                         }
                     default: break;
@@ -409,9 +405,9 @@ namespace BlackJackSimul
             }
             
             Console.ResetColor();
-            log.WriteLine($"Saldo Default player: {Player.BasicStake}");
-            log.WriteLine($"Saldo HL player: {Player.HL_Stake}");
-            log.WriteLine($"Saldo RAPC player: {Player.RAPC_Stake}");
+            Log.WriteLine($"Saldo Default player: {Player.BasicStake}");
+            Log.WriteLine($"Saldo HL player: {Player.HL_Stake}");
+            Log.WriteLine($"Saldo RAPC player: {Player.RAPC_Stake}");
 
             return results;
 

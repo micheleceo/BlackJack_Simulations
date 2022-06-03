@@ -12,6 +12,11 @@ namespace BlackJackSimul
     /// </summary>
     public static class Util
     {
+        /// <summary>
+        /// Calculate point value
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
         public static int PointOf(string card)
         {
             int card_point = 0;

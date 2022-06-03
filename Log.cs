@@ -9,13 +9,13 @@ namespace BlackJackSimul
 {
     public class Log
     {
-        public void Write(string text)
+        public static void Write(string text)
         {
             if (Configs.f_print_hands_on_console)
                 Console.Write(text);
         }
 
-        public void WriteLine(string text)
+        public static void WriteLine(string text)
         {
             if (Configs.f_print_hands_on_console)
                 Console.WriteLine(text);

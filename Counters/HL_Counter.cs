@@ -83,5 +83,6 @@ namespace BlackJackSimul.CountingStrategy
 
             return methodBet;
         }
-    }
-}
+
+    }//end of Class
+}//end of namespace

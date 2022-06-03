@@ -13,10 +13,7 @@ namespace BlackJackSimul
     /// </summary>
     class FileCSV
     {
-        /// <summary>
-        /// Gestione del del file .csv
-        /// </summary>
-        private StreamWriter filecsv { get; }
+        private StreamWriter Filecsv { get; }
         private PropertyInfo[] fields;
         private string Separator;
 
@@ -26,7 +23,7 @@ namespace BlackJackSimul
         /// <param name="path"></param>
         public FileCSV(string path)
         {
-            filecsv = new StreamWriter(path);
+            Filecsv = new StreamWriter(path);
         }
 
         /// <summary>
@@ -44,10 +41,11 @@ namespace BlackJackSimul
 
             string header = String.Join(separator, fields.Select(f => f.Name).ToArray());
 
-            filecsv.WriteLine(header);
+            Filecsv.WriteLine(header);
 
             return header;
         }
+
         /// <summary>
         /// Write CSV line
         /// </summary>
@@ -55,31 +53,28 @@ namespace BlackJackSimul
         /// <returns></returns>
         public string WriteLine(object o)
         {
-            StringBuilder line = new StringBuilder();
+            StringBuilder line = new();
 
             foreach (var f in fields)
             {
-               /* if (linie.Length > 0)
-                    linie.Append(Separator);*/
-
                 var x = f.GetValue(o);
 
                 if (x != null)
                     line.Append(x.ToString()+Separator);
             }
 
-            filecsv.WriteLine(line);
+            Filecsv.WriteLine(line);
             return line.ToString();
         }
     
-
-    /// <summary>
-    /// FLush e chiusura del file
-    /// </summary>
-    public void Close()
+        /// <summary>
+        /// FLush e chiusura del file
+        /// </summary>
+        public void Close()
         {
-            filecsv.Flush();
-            filecsv.Close();
+                Filecsv.Flush();
+                Filecsv.Close();
         }
-    }
-}
+
+    }//end of class
+}//end of namespace
