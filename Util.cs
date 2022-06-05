@@ -58,7 +58,7 @@ namespace BlackJackSimul
         {
             bool f_BlackJack = false;
 
-            if (hand.Cards.Count == 2 && hand.punteggio.Value == 21 && !hand.f_splitted)
+            if (hand.Cards.Count == 2 && hand.score.Value == 21 && !hand.f_splitted)
                 f_BlackJack = true;
 
             return f_BlackJack;
@@ -67,7 +67,7 @@ namespace BlackJackSimul
         private static void WriteStatistic(StatisticData stat_data)
         {
 
-            StringBuilder statistics = new StringBuilder();
+            StringBuilder statistics = new();
             statistics.AppendLine($"HL TrueCounter -" +
                                   $" MIN: {stat_data.memory.HL_TrueCountersequence.Min()}" +
                                   $" MAX: {stat_data.memory.HL_TrueCountersequence.Max()}");

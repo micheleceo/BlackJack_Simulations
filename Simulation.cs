@@ -55,8 +55,6 @@ namespace BlackJackSimul
             var hl_rtp = 100 + (Player.HL_Stake / playRecord.HL_TotalBet) * 100;
             var rapc_rtp = 100 + (Player.RAPC_Stake / playRecord.RAPC_TotalBet) * 100;
             Console.WriteLine($"\nBASIC RTP: {basic_rtp}% \t HL_RTP: {hl_rtp}% \t RAPC_RTP: {rapc_rtp}%");
-
-
         }
         
         /// <summary>
@@ -109,7 +107,6 @@ namespace BlackJackSimul
 
 
                 //Giocate
-                
                 if (!Util.CheckBlackJack(dealer.hand))
                 {
                     #region GIOCATA PLAYER
@@ -200,7 +197,7 @@ namespace BlackJackSimul
 
                     string dealerAction = "";
                     if (countBlackJack != player.hands.Count)
-                        while (dealer.hand.punteggio.Value < 21 &&
+                        while (dealer.hand.score.Value < 21 &&
                                !dealer.hand.f_bust &&
                                dealerAction != "STAND")
                         {
@@ -213,7 +210,6 @@ namespace BlackJackSimul
                         }
 
                     dealer.WriteResult();
-
 
                     #endregion GIOCATA DEALER
 
@@ -283,14 +279,12 @@ namespace BlackJackSimul
 
                 #endregion UPDATE PLAY RECORD
 
-
                 playFile.WriteLine(playRecord);
 
                 if (f_OneShot)
                     break;
 
             }
-           
         }
 
         /// <summary>
@@ -303,12 +297,12 @@ namespace BlackJackSimul
         {
             Console.ForegroundColor = ConsoleColor.Green;
             var dealerHand = dealer.hand;
-            var punteggioDealer = dealerHand.punteggio.Value;
+            var punteggioDealer = dealerHand.score.Value;
             var results = new List<string>();
 
             foreach (Hand playerHand in player.hands)
             {
-                var punteggioPlayer = playerHand.punteggio.Value;
+                var punteggioPlayer = playerHand.score.Value;
 
                 //Risultato partita
                 if (punteggioPlayer > 21)
@@ -405,9 +399,9 @@ namespace BlackJackSimul
             }
             
             Console.ResetColor();
-            Log.WriteLine($"Saldo Default player: {Player.BasicStake}");
-            Log.WriteLine($"Saldo HL player: {Player.HL_Stake}");
-            Log.WriteLine($"Saldo RAPC player: {Player.RAPC_Stake}");
+            Log.WriteLine($"Stake Default player: {Player.BasicStake}");
+            Log.WriteLine($"Stake HL player: {Player.HL_Stake}");
+            Log.WriteLine($"Stake RAPC player: {Player.RAPC_Stake}");
 
             return results;
 

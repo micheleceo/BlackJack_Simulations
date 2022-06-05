@@ -24,7 +24,7 @@ namespace BlackJackSimul
 
         public string ApplyRules(Config conf)
         {
-            var punteggio = hand.punteggio.Value;
+            var punteggio = hand.score.Value;
             string response = "";
 
             //TODO: implementare soft 17
@@ -33,7 +33,7 @@ namespace BlackJackSimul
                 response = "HIT";
             else if(punteggio ==17)
             {
-                if(hand.punteggio.f_soft && conf.f_dealer_Soft17_hit)
+                if(hand.score.f_soft && conf.f_dealer_Soft17_hit)
                     response = "HIT";
                 else
                     response = "STAND";
@@ -54,8 +54,8 @@ namespace BlackJackSimul
                 StringBuilder actorString = new StringBuilder();
                 actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
                 actorString.Append(string.Join(", ", hand.Cards));
-                actorString.Append(" --> " + hand.punteggio.Value);
-                if (hand.punteggio.Value > 21)
+                actorString.Append(" --> " + hand.score.Value);
+                if (hand.score.Value > 21)
                     actorString.Append(" : SBALLATO");
                 else if (Util.CheckBlackJack(hand))
                     actorString.Append(" : BLACKJACK");

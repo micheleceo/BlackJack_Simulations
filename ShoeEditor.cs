@@ -14,7 +14,12 @@ namespace BlackJackSimul
             HL_Counter,
             RAPC_Counter
         }
-
+        /// <summary>
+        /// Edit the shoe to reach the target counter
+        /// </summary>
+        /// <param name="shoe">Shoe to edit</param>
+        /// <param name="counter">Counter type</param>
+        /// <param name="targetTrueCounter">Tragert counter to reach</param>
         public static void Edit(Shoe shoe, CounterType counter, float targetTrueCounter)
         {
             Random rand = new Random();
@@ -41,7 +46,7 @@ namespace BlackJackSimul
                         }
 
                     default:
-                        Console.WriteLine("Carta non trovata");
+                        Console.WriteLine("Card non found");
                         break;
                 }
 
@@ -55,10 +60,10 @@ namespace BlackJackSimul
                         Console.WriteLine($"Removed {cardFace} \t TrueCounter = {trueCounter}");
                     }
                     else
-                        Console.WriteLine($"Carta {cardFace} non trovata");
+                        Console.WriteLine($"Card {cardFace} not found");
 
                 }
-                else Console.WriteLine($"Non posso togliere {cardFace}, il troucounter andrebbe a {trueCounter + trueIncrement}");
+                else Console.WriteLine($"Can't remove {cardFace} because TrueCounter will be {trueCounter + trueIncrement}");
 
             }
            

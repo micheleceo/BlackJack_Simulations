@@ -398,5 +398,6 @@ namespace BlackJackSimul.StrategiesTables
             Response[31, 9] = "HIT";
 
         }
-    }
-}
+   
+    }//end of class
+}//end of namespace

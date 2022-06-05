@@ -47,7 +47,7 @@ namespace BlackJackSimul
 
         public string AskAction(int handID, int dealerFirstCard)
         {
-            if (hands[handID].punteggio.Value >= 21)
+            if (hands[handID].score.Value >= 21)
                 return "STAND";
              else
                 return ApplicaStrategiaBase(hands[handID],dealerFirstCard);
@@ -57,7 +57,7 @@ namespace BlackJackSimul
         {
             var response = basic.ApplyStrategy(hand,dealerFirstCard);
 
-            //Correct if double down is not possible
+            //Correct if double down if it is not possible
             if (response == "DOUBLE DOWN" && ( hand.Cards.Count != 2 || hand.f_splitted) )
                 response = "HIT";
 
@@ -75,8 +75,8 @@ namespace BlackJackSimul
                     StringBuilder actorString = new StringBuilder();
                     actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
                     actorString.Append(string.Join(", ", hand.Cards));
-                    actorString.Append(" --> " + hand.punteggio.Value);
-                    if (hand.punteggio.Value > 21)
+                    actorString.Append(" --> " + hand.score.Value);
+                    if (hand.score.Value > 21)
                         actorString.Append(" : SBALLATO");
                     else if (Util.CheckBlackJack(hand))
                         actorString.Append(" : BLACKJACK");
@@ -93,8 +93,8 @@ namespace BlackJackSimul
                 StringBuilder actorString = new StringBuilder();
                 actorString.Append((GetType().ToString().ToUpper() + ": ").Split('.')[1]);
                 actorString.Append(string.Join(", ", hand.Cards));
-                actorString.Append(" --> " + hand.punteggio.Value);
-                if (hand.punteggio.Value > 21)
+                actorString.Append(" --> " + hand.score.Value);
+                if (hand.score.Value > 21)
                     actorString.Append(" : SBALLATO");
                 else if (Util.CheckBlackJack(hand))
                     actorString.Append(" : BLACKJACK");

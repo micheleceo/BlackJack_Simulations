@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BlackJackSimul
 {
     /// <summary>
-    /// Create a classi card deck
+    /// Create a classic card deck
     /// </summary>
     public static class CardDeck
     {

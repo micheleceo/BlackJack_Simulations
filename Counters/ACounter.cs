@@ -47,8 +47,6 @@ namespace BlackJackSimul
         {
             RunningCounter += CalulateIncrement(cardFace);
         }
-      
-       
 
     }// end of Class
 }// end of namespace

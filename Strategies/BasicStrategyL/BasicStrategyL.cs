@@ -55,9 +55,9 @@ namespace BlackJackSimul
             }
 
             //Controllo soft
-            if (hand.punteggio.f_soft)
+            if (hand.score.f_soft)
             {
-                switch (hand.punteggio.Value)
+                switch (hand.score.Value)
                 {
                     case 20: row = (int)Row.R_S20; break;
                     case 19: row = (int)Row.R_S19; break;
@@ -74,7 +74,7 @@ namespace BlackJackSimul
 
 
             //Controllo punteggi hard
-            switch (hand.punteggio.Value)
+            switch (hand.score.Value)
             {
                 case 21: row = (int)Row.R_H18; break;
                 case 20: row = (int)Row.R_H18; break;
