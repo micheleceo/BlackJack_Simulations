@@ -24,7 +24,7 @@ namespace BlackJackSimul
         /// <summary>
         /// Remaining cards number in the shoe
         /// </summary>
-        private int RemaningCards
+        public int RemaningCards
         {
             get
             {

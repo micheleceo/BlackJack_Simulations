@@ -9,6 +9,8 @@ namespace BlackJackSimul
 {
     public class CountersManager
     {
+        public Shoe Shoe;
+
         public HL_Counter hl_counter  { get; set; }
 
         public RAPC_Counter rapc_counter  { get; set; }
@@ -17,8 +19,20 @@ namespace BlackJackSimul
 
         public int TenCounter { get; set; }
 
+        public float TenIndex
+        {
+            get { return (Configs.ShoeDeckTotalNumber * 52 - 3.25f * TenCounter) / (float)Shoe.RemaningCards; }
+        }
+
+        public float AcenIndex
+        {
+            get { return ( Configs.ShoeDeckTotalNumber * 52 - 13 * AceCounter) / (float)Shoe.RemaningCards; }
+        }
+
+
         public CountersManager(Shoe shoe)
         {
+            Shoe = shoe;
             hl_counter = new HL_Counter(shoe);
             rapc_counter = new RAPC_Counter(shoe);
         }

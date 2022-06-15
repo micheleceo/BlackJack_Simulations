@@ -31,5 +31,10 @@ namespace BlackJackSimul.Data
         public float HL_TrueCounter { get; set; }
         public int RAPC_RunningCounter { get; set; }
         public float RAPC_TrueCounter { get; set; }
+        public int TenCounter { get; set; }
+        public float TenIndex { get; set; }
+        public int AceCounter { get; set; }      
+        public float AceIndex { get; set; }
+
     }
 }

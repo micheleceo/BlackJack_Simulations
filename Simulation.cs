@@ -261,6 +261,10 @@ namespace BlackJackSimul
                 playRecord.HL_TrueCounter = countManager.hl_counter.TrueCounter;
                 playRecord.RAPC_RunningCounter = countManager.rapc_counter.RunningCounter;
                 playRecord.RAPC_TrueCounter = countManager.rapc_counter.TrueCounter;
+                playRecord.TenCounter = countManager.TenCounter;
+                playRecord.TenIndex = countManager.TenIndex;
+                playRecord.AceCounter = countManager.AceCounter;
+                playRecord.AceIndex = countManager.AcenIndex;
 
                 playRecord.Flat_TotalBet = Player.Default_TotalBet;
                 playRecord.HL_TotalBet = Player.HL_TotalBet;

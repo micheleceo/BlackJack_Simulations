@@ -19,6 +19,7 @@ namespace BlackJackSimul
             {
                 conf = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Configuration.json"));
                 Configs.f_print_hands_on_console = conf.f_print_hands_on_console;
+                Configs.ShoeDeckTotalNumber = conf.ShoeDeckTotalNumber;
             }
             catch
             {
@@ -35,6 +36,8 @@ namespace BlackJackSimul
     public static class Configs
     {
         public static bool f_print_hands_on_console;
+
+        public static int ShoeDeckTotalNumber { get; internal set; }
     }
 
 }// end of namepace
